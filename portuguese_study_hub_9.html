@@ -1790,6 +1790,7 @@ function displayAnswer(item){
 
 function renderWrite(){
   wAnswered=false; wHintLevel=0;
+const hintBtn=document.getElementById('writeHint'); if(hintBtn) hintBtn.textContent='\uD83D\uDCA1 Hint';
   const item=currentW();
   document.getElementById('writeLabel').textContent = wDir==='PTEN' ? 'Translate into English:' : 'Translate into Portuguese:';
   document.getElementById('writePrompt').textContent = promptText(item);
@@ -1856,12 +1857,34 @@ document.getElementById('writeSkip').addEventListener('click',()=>{
   document.getElementById('writeCheck').style.display='none';
   document.getElementById('writeNext').style.display='inline-block';
 });
+const HINT_MAX_LEVELS = 3;
+function maskAnswer(ans, level){
+return ans.split(/(\s+|-)/).map(part=>{
+if(/^(\s+|-)$/.test(part) || part.length===0) return part;
+const len=part.length;
+let revealCount;
+if(level<=0) revealCount=0;
+else if(level===1) revealCount=1;
+else if(level===2) revealCount=Math.max(1,Math.ceil(len/2));
+else if(level===3) revealCount=Math.max(1,len-1);
+else revealCount=len;
+revealCount=Math.min(revealCount,len);
+return part.slice(0,revealCount) + '_'.repeat(len-revealCount);
+}).join('');
+}
 document.getElementById('writeHint').addEventListener('click',()=>{
-  if(wAnswered) return;
-  const ans=answerList(currentW())[0];
-  wHintLevel=Math.min(wHintLevel+1,ans.length);
-  wFb.className='write-feedback show almost';
-  wFb.textContent='💡 Hint: ' + ans.slice(0,wHintLevel) + '·'.repeat(Math.max(ans.length-wHintLevel,0));
+if(wAnswered) return;
+const item=currentW();
+const answers=answerList(item);
+const ans=answers[0];
+wHintLevel=Math.min(wHintLevel+1, HINT_MAX_LEVELS+1);
+const masked=maskAnswer(ans,wHintLevel);
+const levelLabel = wHintLevel>HINT_MAX_LEVELS ? 'Full answer' : ('Hint '+wHintLevel+'/'+HINT_MAX_LEVELS);
+const altNote = answers.length>1 ? (' ('+answers.length+' accepted answers)') : '';
+wFb.className='write-feedback show almost';
+wFb.textContent='\uD83D\uDCA1 '+levelLabel+': '+masked+altNote;
+const hintBtn=document.getElementById('writeHint');
+if(hintBtn) hintBtn.textContent = wHintLevel>HINT_MAX_LEVELS ? '\uD83D\uDCA1 Hint (done)' : ('\uD83D\uDCA1 Hint ('+wHintLevel+'/'+HINT_MAX_LEVELS+')');
 });
 wInput.addEventListener('keydown',e=>{
   if(e.key==='Enter'){ e.preventDefault(); wAnswered ? nextWrite() : checkWrite(); }

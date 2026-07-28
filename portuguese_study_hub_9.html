@@ -247,6 +247,16 @@
   .quiz-card .qc-desc{font-size:.88rem;color:var(--ink-soft);line-height:1.45}
   .quiz-card .qc-meta{margin-top:10px;font-size:.78rem;font-weight:700;color:var(--pink);text-transform:uppercase;letter-spacing:.08em}
   .quiz-card .qc-best{display:block;margin-top:6px;font-size:.78rem;color:var(--ink-soft);font-weight:700}
+  /* external practice link card */
+  .quiz-card-ext{
+    display:block;text-decoration:none;border-top-color:var(--pink);
+    background:linear-gradient(160deg,#FFFFFF 0%,#FDF2F6 100%);
+  }
+  .quiz-card-ext .qc-title{color:#C9436C}
+  .quiz-card-ext .qc-ext-arrow{font-size:.9rem;opacity:.8}
+  .quiz-card-ext .qc-meta-ext{color:var(--pink)}
+  .quiz-card-ext:hover{box-shadow:0 14px 34px rgba(242,121,155,.28)}
+  .quiz-card-ext:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
   .quiz-menu-title{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1.3rem;text-align:center;color:var(--teal-deep);margin-bottom:6px}
   .quiz-menu-sub{text-align:center;color:var(--ink-soft);font-size:.93rem;margin-bottom:24px}
 
@@ -381,7 +391,7 @@
 <body>
 
 <header>
-  <span class="eyebrow">Lessons 1–11 · Brazilian Portuguese</span>
+  <span class="eyebrow">Lessons 1–12 · Brazilian Portuguese</span>
   <h1>Português Study Hub</h1>
   <p>Flashcards, grammar guide &amp; quiz — built from your class notes</p>
   <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound effects" title="Toggle sounds">
@@ -698,6 +708,56 @@
   </details>
 
   <details class="guide">
+    <summary>Lesson 12 — The regular past tense (-AR verbs)</summary>
+    <div class="guide-body">
+      <p><b>Your first regular past tense!</b> For -AR verbs, learn these four endings — <span class="pt">-ei, -ou, -amos, -aram</span>:</p>
+      <table class="conj">
+        <tr><th></th><th>FALAR (to speak) — past</th><th>ending</th></tr>
+        <tr><td>Eu</td><td class="hl">falei</td><td>-ei</td></tr>
+        <tr><td>Você / Ele / Ela</td><td>falou</td><td>-ou</td></tr>
+        <tr><td>Nós</td><td>falamos</td><td>-amos</td></tr>
+        <tr><td>Vocês / Eles / Elas</td><td>falaram</td><td>-aram</td></tr>
+      </table>
+      <div class="note"><b>Watch out:</b> <span class="pt">nós falamos</span> looks identical in present and past — context tells you which. And the "eu" ending is <span class="pt">-ei</span> (falei, not "falou").</div>
+      <p><b>Spelling-change verbs</b> — three -AR verbs tweak their spelling in the <b>eu</b> form to keep the sound (ca ce ci co cu / ga ge gi go gu):</p>
+      <table class="conj">
+        <tr><th></th><th>FICAR (stay)</th><th>PAGAR (pay)</th><th>CHEGAR (arrive)</th></tr>
+        <tr><td>Eu</td><td class="hl">fiquei</td><td class="hl">paguei</td><td class="hl">cheguei</td></tr>
+        <tr><td>Você / Ele / Ela</td><td>ficou</td><td>pagou</td><td>chegou</td></tr>
+        <tr><td>Nós</td><td>ficamos</td><td>pagamos</td><td>chegamos</td></tr>
+        <tr><td>Vocês / Eles / Elas</td><td>ficaram</td><td>pagaram</td><td>chegaram</td></tr>
+      </table>
+      <p>The c→qu and g→gu keep the hard sound before the -ei ending: <span class="pt">fiquei, paguei, cheguei</span>.</p>
+      <p><b>Example sentences:</b></p>
+      <ul>
+        <li><span class="pt">Eu contei uma fofoca pra ele</span> — I told him some gossip</li>
+        <li><span class="pt">Eu fico feliz quando você liga</span> — I get happy when you call</li>
+        <li><span class="pt">Ele me falou que isso não pode mais acontecer</span> — He told me this can't happen again</li>
+        <li><span class="pt">No final, ficou tudo bem</span> — In the end, everything was fine</li>
+        <li><span class="pt">Graças a você, eu sou saudável</span> — Thanks to you, I'm healthy</li>
+        <li><span class="pt">Eu ainda não tomei café da manhã</span> — I haven't had breakfast yet</li>
+        <li><span class="pt">Eu tentei estudar sozinha</span> — I tried to study alone</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="guide">
+    <summary>Lesson 12 — Time words, "because" &amp; quanto vs quando</summary>
+    <div class="guide-body">
+      <p><b>Talking about the past:</b> <span class="pt">ontem</span> (yesterday) · <span class="pt">anteontem</span> (the day before yesterday) · <span class="pt">ontem à noite</span> (last night) · <span class="pt">dias atrás</span> (days ago) · <span class="pt">desde</span> (since) · <span class="pt">até</span> (until)</p>
+      <p><b>Three ways to say "because":</b></p>
+      <ul>
+        <li><span class="pt">porque</span> — because (neutral, the everyday one)</li>
+        <li><span class="pt">por causa de</span> — because of (a consequence / often negative): <span class="pt">por causa da chuva</span> = because of the rain</li>
+        <li><span class="pt">graças a / ao</span> — thanks to (positive): <span class="pt">graças a</span> + feminine, <span class="pt">graças ao</span> + masculine</li>
+      </ul>
+      <div class="note"><b>Quase iguais no som</b> — nearly the same sound: <span class="pt">quan<b>t</b>o</span> = how much (quantity) → <span class="pt">Quanto custa a passagem?</span> · <span class="pt">quan<b>d</b>o</span> = when (time) → <span class="pt">Quando você chega?</span></div>
+      <p><b>Weather &amp; weekend openers:</b> <span class="pt">Como está o tempo hoje?</span> = how's the weather today? (tempo = weather or time) · <span class="pt">Como foi seu fim de semana?</span> = how was your weekend?</p>
+      <p><b>More new vocab:</b> <span class="pt">ganhar</span> (win/earn) · <span class="pt">perder</span> (lose) · <span class="pt">contar</span> (tell/count) · <span class="pt">cantar</span> (sing) · <span class="pt">ligar</span> (call) · <span class="pt">encontrar</span> (find/meet) · <span class="pt">melhorar</span> (get better) · <span class="pt">piorar</span> (get worse) · <span class="pt">barulho</span> (noise) · <span class="pt">o voo</span> (the flight) · <span class="pt">meio-dia / meia-noite</span> (midday / midnight) · <span class="pt">florestas</span> (forests) · <span class="pt">orgulho</span> (pride)</p>
+    </div>
+  </details>
+
+  <details class="guide">
     <summary>⚠️ Corrections spotted in your notes</summary>
     <div class="guide-body">
       <div class="note">A few lines in the notes have slips worth fixing before they stick:</div>
@@ -706,6 +766,11 @@
         <li><span class="pt">Eles vão fazer</span> = "they will <b>do/make</b>" (not "drink" — that's <span class="pt">beber</span>)</li>
         <li><span class="pt">Ainda</span> usually means "<b>still / yet</b>", not "right now" (right now = <span class="pt">agora mesmo</span>). <span class="pt">Ainda não</span> = not yet ✓</li>
         <li><span class="pt">O que você vai fazer amanhã?</span> = what are you <b>going to</b> do (want to = <span class="pt">querer</span>)</li>
+        <li><span class="pt">Barulho</span>, not "barrulo" — noise (Lesson 12)</li>
+        <li><span class="pt">Contar</span> = to tell OR to count; <span class="pt">cantar</span> = to sing — one letter apart, easy to mix up</li>
+        <li><span class="pt">Ganhar</span> covers both "to win" and "to earn" (money); <span class="pt">perder</span> = to lose</li>
+        <li>"I get happy when you call" is present: <span class="pt">Eu fico feliz quando você liga</span> (your notes had a past form)</li>
+        <li>Spellings: <span class="pt">meia-noite</span>, <span class="pt">de manhã</span>, <span class="pt">amanhã</span>, <span class="pt">saudável</span></li>
         <li><span class="pt">Raramente</span>, not "raremente" — rarely (Lesson 10)</li>
         <li><span class="pt">Na verdade</span> is two words (actually); <span class="pt">atrasada</span> = late/delayed, while <span class="pt">tarde</span> = late in the day</li>
         <li><span class="pt">Eu faço</span> — with ç (Lesson 11), and <span class="pt">o que você faz?</span> not "faiz"</li>
@@ -949,6 +1014,36 @@ const CARDS = [
   {c:"Phrases", f:"Ele sabe que eu sei", b:"He knows that I know"},
   {c:"Phrases", f:"Nós sabemos demais", b:"We know too much", x:"demais = too much"},
   {c:"Phrases", f:"Eu não posso ver nada", b:"I can't see anything", x:"...no escuro = in the dark"},
+  // Lesson 12
+  {c:"Verbs", f:"Ganhar", b:"To win / to earn"},
+  {c:"Verbs", f:"Perder", b:"To lose"},
+  {c:"Verbs", f:"Contar", b:"To tell / to count", x:"Eu contei uma fofoca pra ele"},
+  {c:"Verbs", f:"Cantar", b:"To sing"},
+  {c:"Verbs", f:"Ligar", b:"To call (by phone)", x:"Eu fico feliz quando você liga"},
+  {c:"Verbs", f:"Encontrar", b:"To find / to meet"},
+  {c:"Verbs", f:"Melhorar", b:"To get better / improve"},
+  {c:"Verbs", f:"Piorar", b:"To get worse"},
+  {c:"Verbs", f:"Ficar", b:"To stay / to become", x:"Eu fiquei = I stayed (past)"},
+  {c:"Verbs", f:"Pagar", b:"To pay", x:"Eu paguei = I paid (past)"},
+  {c:"Phrases", f:"Eu falei", b:"I spoke / said (past)", x:"falar → eu falei"},
+  {c:"Phrases", f:"Anteontem", b:"The day before yesterday"},
+  {c:"Phrases", f:"Ontem à noite", b:"Last night"},
+  {c:"Phrases", f:"Dias atrás", b:"Days ago"},
+  {c:"Phrases", f:"Até", b:"Until"},
+  {c:"Phrases", f:"Desde", b:"Since"},
+  {c:"Phrases", f:"Por causa de", b:"Because of (the consequence)"},
+  {c:"Phrases", f:"Graças a / ao", b:"Thanks to (positive)", x:"graças a (fem) / ao (masc)"},
+  {c:"Phrases", f:"Porque", b:"Because (neutral)"},
+  {c:"Phrases", f:"Como está o tempo hoje?", b:"How's the weather today?"},
+  {c:"Phrases", f:"Como foi seu fim de semana?", b:"How was your weekend?"},
+  {c:"Adjectives", f:"Orgulho", b:"Pride", x:"Ter orgulho = to be proud"},
+  {c:"Adjectives", f:"Saudável", b:"Healthy", x:"Graças a você eu sou saudável"},
+  {c:"Nouns & People", f:"Florestas", b:"Forests"},
+  {c:"Nouns & People", f:"Barulho", b:"Noise"},
+  {c:"Nouns & People", f:"Empregado/a", b:"Employee"},
+  {c:"Nouns & People", f:"O voo", b:"The flight"},
+  {c:"Nouns & People", f:"Meio-dia", b:"Midday / 12pm"},
+  {c:"Nouns & People", f:"Meia-noite", b:"Midnight / 12am"},
 ];
 
 
@@ -990,6 +1085,14 @@ const CONJ = {
     note:"O que você faz? = what do you do? Faço is another c/ç spelling survivor."},
   querer:{verb:"QUERER (to want)",rows:[["Eu","quero"],["Você / Ele / Ela","quer"],["Nós","queremos"],["Vocês / Eles / Elas","querem"],["A gente","quer"]],
     note:"Querer + infinitive = want to: eu quero viajar. Note você QUER, with no ending."},
+  falarpast:{verb:"FALAR (to speak) — regular past (-AR)",rows:[["Eu","falei"],["Você / Ele / Ela","falou"],["Nós","falamos"],["Vocês / Eles / Elas","falaram"],["A gente","falou"]],
+    note:"The -AR past endings: -ei, -ou, -amos, -aram. Works for trabalhar, estudar, morar, tomar, tentar…"},
+  ficarpast:{verb:"FICAR (to stay) — past, spelling change",rows:[["Eu","fiquei ⚠"],["Você / Ele / Ela","ficou"],["Nós","ficamos"],["Vocês / Eles / Elas","ficaram"],["A gente","ficou"]],
+    note:"c→qu before the -ei ending keeps the hard k sound: eu fiquei. Rest are regular -AR past forms."},
+  pagarpast:{verb:"PAGAR (to pay) — past, spelling change",rows:[["Eu","paguei ⚠"],["Você / Ele / Ela","pagou"],["Nós","pagamos"],["Vocês / Eles / Elas","pagaram"],["A gente","pagou"]],
+    note:"g→gu before -ei keeps the hard g sound: eu paguei. Same trick as cheguei (chegar)."},
+  chegarpast:{verb:"CHEGAR (to arrive) — past, spelling change",rows:[["Eu","cheguei ⚠"],["Você / Ele / Ela","chegou"],["Nós","chegamos"],["Vocês / Eles / Elas","chegaram"],["A gente","chegou"]],
+    note:"g→gu before -ei: eu cheguei. Ficar, pagar and chegar all do this in the eu past."},
   odiar:{verb:"ODIAR (to hate)",rows:[["Eu","odeio ⚠"],["Você / Ele / Ela","odeia"],["Nós","odiamos"],["Vocês / Eles / Elas","odeiam"],["A gente","odeia"]],
     note:"The i becomes ei in most forms: eu odeio, você odeia — but nós odiamos keeps the plain i."},
   verpast:{verb:"VER (to see) — past",rows:[["Eu","vi"],["Você / Ele / Ela","viu"],["Nós","vimos"],["Vocês / Eles / Elas","viram"],["A gente","viu"]],
@@ -1165,7 +1268,30 @@ const QUIZZES = [
   ex:"Gostar ALWAYS takes DE: eu gosto de café. It's on the core-verb list, and forgetting the de is the most common slip."},
 ]},
 
-{id:"vocab",icon:"💬",title:"Vocabulary & phrases",desc:"Words from Lessons 1–11, plus useful extras.",qs:[
+{id:"pastregular",icon:"📆",title:"Regular past tense (-AR)",desc:"Lesson 12: falei, ficou, cheguei — the -ei/-ou/-amos/-aram endings.",qs:[
+ {t:"fill",q:"Type the eu form: FALAR in the past → Eu ___ com ele ontem. (I spoke)",a:["falei"],conj:"falarpast",
+  ex:"Eu falei. The -AR past eu ending is -ei: falei, tomei, tentei, estudei. Ontem = yesterday, a past-tense signal."},
+ {t:"mc",q:"Você ___ para a festa? (falar past — did you speak/talk)",opts:["falei","falou","falamos","falaram"],a:1,conj:"falarpast",
+  ex:"Você/ele/ela → falou (-ou ending). Eu falei, você falou, nós falamos, eles falaram."},
+ {t:"fill",q:"Type the eu form: FICAR past → Eu ___ em casa ontem. (I stayed)",a:["fiquei"],conj:"ficarpast",
+  ex:"Eu fiquei — the c becomes qu before -ei to keep the hard sound. Ficar also means \"to become\": ficou tudo bem."},
+ {t:"mc",q:"PAGAR in the past: Eu ___ a conta. (I paid the bill)",opts:["pagei","paguei","paguou","pago"],a:1,conj:"pagarpast",
+  ex:"Eu paguei — g→gu before -ei keeps the hard g. Without the u it'd sound like \"pajei\"."},
+ {t:"fill",q:"Type the eu form: CHEGAR past → Eu ___ cedo. (I arrived early)",a:["cheguei"],conj:"chegarpast",
+  ex:"Eu cheguei — same g→gu trick as paguei and fiquei. These three are the classic Lesson 12 spelling-changers."},
+ {t:"mc",q:"Eles ___ tarde. (chegar past — they arrived late)",opts:["chegou","cheguei","chegaram","chegamos"],a:2,conj:"chegarpast",
+  ex:"Eles/vocês → chegaram (-aram ending). The spelling change only happens in the eu form (cheguei); the rest are plain."},
+ {t:"mc",q:"Which sentence is in the PAST?",opts:["Eu falo com ele","Eu vou falar com ele","Eu falei com ele","Eu tenho que falar com ele"],a:2,conj:"falarpast",
+  ex:"Falei = I spoke (past). Falo = I speak (present), vou falar = I'll speak (future), tenho que falar = I have to speak."},
+ {t:"fill",q:"Type the verb: Nós ___ muito ontem. (falar past — we talked a lot)",a:["falamos"],conj:"falarpast",
+  ex:"Nós falamos — careful, this looks identical to the present tense! Only ontem/context tells you it's past."},
+ {t:"mc",q:"\"Eu contei uma fofoca\" means…",opts:["I count gossip","I told some gossip","I sang a song","I forgot the gossip"],a:1,conj:"falarpast",
+  ex:"Contar = to tell (also to count), so contei = I told. Fofoca = gossip. Cantar (to sing) is the look-alike — cantei = I sang."},
+ {t:"mc",q:"Extra: \"Eu ainda não tomei café da manhã\" means…",opts:["I don't take breakfast","I haven't had breakfast yet","I never eat breakfast","I will have breakfast"],a:1,conj:"falarpast",
+  ex:"Tomei = I took/had (tomar, past). Ainda não = not yet. So: I haven't had breakfast yet. Café da manhã = breakfast."},
+]},
+
+{id:"vocab",icon:"💬",title:"Vocabulary & phrases",desc:"Words from Lessons 1–12, plus useful extras.",qs:[
  {t:"mc",q:"What does \"saudades\" mean?",opts:["Health","Missing / longing for something","Greetings","Saturdays"],a:1,
   ex:"The famous \"untranslatable\" word: the ache of missing someone or something. Estou com saudades / tenho saudades."},
  {t:"fill",q:"Type the Portuguese for \"unfortunately\" (Lesson 9)",a:["infelizmente"],
@@ -1196,6 +1322,24 @@ const QUIZZES = [
   ex:"Atrasada = late/delayed (a person or a train). Tarde = late in the day. Sempre = always."},
  {t:"fill",q:"Type the Portuguese for \"mess\" (Lesson 11: vocês fazem muita ___)",a:["bagunça","bagunca"],
   ex:"Bagunça. Fazer bagunça = to make a mess — extremely common in Brazilian homes and classrooms!"},
+]},
+{id:"newwords",icon:"🆕",title:"Newer words (Lessons 10–12)",desc:"Odiar, ganhar, contar, quanto vs quando and more recent vocab.",qs:[
+ {t:"mc",q:"GANHAR means…",opts:["To lose","To win / to earn","To give","To gain weight only"],a:1,
+  ex:"Ganhar = to win OR to earn (money). Its opposite is perder (to lose). Ganhar um jogo = win a game; ganhar dinheiro = earn money."},
+ {t:"fill",q:"Type the Portuguese for \"noise\" (Lesson 12)",a:["barulho"],
+  ex:"Barulho. Fazer barulho = to make noise. (Your notes had \"barrulo\" — the correct spelling is barulho.)"},
+ {t:"mc",q:"CONTAR vs CANTAR — contar means…",opts:["To sing","To tell / to count","To find","To pay"],a:1,
+  ex:"Contar = to tell or to count. Cantar = to sing. One letter apart! Eu contei uma história = I told a story."},
+ {t:"mc",q:"\"Graças a você\" means…",opts:["Because of you (blame)","Thanks to you (positive)","In spite of you","According to you"],a:1,
+  ex:"Graças a/ao = thanks to (positive outcome). For a negative cause you'd use por causa de. Both differ from plain porque (because)."},
+ {t:"mc",q:"QUANTO vs QUANDO — quanto asks about…",opts:["Time (when)","Quantity (how much)","Place (where)","Reason (why)"],a:1,
+  ex:"Quanto = how much (quantidade): Quanto custa a passagem? Quando = when (tempo): Quando você chega? Nearly identical in sound!"},
+ {t:"fill",q:"Type the Portuguese for \"the day before yesterday\" (one word)",a:["anteontem"],
+  ex:"Anteontem. Build it up: ontem (yesterday) → ante-ontem (before-yesterday). Ontem à noite = last night."},
+ {t:"mc",q:"MELHORAR and PIORAR are opposites meaning…",opts:["To love / to hate","To get better / to get worse","To win / to lose","To arrive / to leave"],a:1,
+  ex:"Melhorar = to get better/improve, piorar = to get worse. Melhor = better, pior = worse — the adjectives they come from."},
+ {t:"mc",q:"\"Meia-noite\" is…",opts:["Midday (12pm)","Midnight (12am)","Half an hour","Afternoon"],a:1,
+  ex:"Meia-noite = midnight (12am); meio-dia = midday (12pm). Meia = half, noite = night → \"half night\" = midnight."},
  {t:"mc",q:"\"Eu odeio\" means…",opts:["I love","I hate","I owe","I hear"],a:1,conj:"odiar",
   ex:"Odiar = to hate, and the eu form is odeio (the i becomes ei). It's the opposite of eu adoro / eu amo."},
  {t:"mc",q:"\"O que aconteceu?\" vs \"O que está acontecendo?\"",opts:["Both mean the same","First = what happened (past); second = what's happening (now)","First is future","Second is past"],a:1,
@@ -1470,6 +1614,22 @@ QUIZZES.forEach((qz,i)=>{
     <span class="qc-best" id="best-${qz.id}"></span>`;
   b.addEventListener('click',()=>openQuiz(i));
   menuGrid.appendChild(b);
+});
+
+/* external practice link — opens the teacher's site in a new tab */
+const EXTERNAL_PRACTICE=[
+  {icon:"📝",title:"Past Tense Practice",desc:"Extra practice from your teacher. Opens in a new tab.",
+   url:"https://claude.ai/public/artifacts/84db3a18-7673-4eac-9575-3780439ecc11"}
+];
+EXTERNAL_PRACTICE.forEach(ex=>{
+  const a=document.createElement('a');
+  a.className='quiz-card quiz-card-ext';
+  a.href=ex.url; a.target='_blank'; a.rel='noopener noreferrer';
+  a.innerHTML=`<span class="qc-icon">${ex.icon}</span>
+    <div class="qc-title">${ex.title} <span class="qc-ext-arrow">↗</span></div>
+    <div class="qc-desc">${ex.desc}</div>
+    <div class="qc-meta qc-meta-ext">Teacher's practice</div>`;
+  menuGrid.appendChild(a);
 });
 
 function openQuiz(i){
@@ -1751,6 +1911,30 @@ const WRITE = [
   {pt:["gostar"], en:["like","to like"]},
   {pt:["demais"], en:["too much","too many"]},
   {pt:["escuro"], en:["dark","the dark"]},
+  {pt:["ganhar"], en:["win","earn","to win","to earn"]},
+  {pt:["perder"], en:["lose","to lose"]},
+  {pt:["contar"], en:["tell","count","to tell","to count"]},
+  {pt:["cantar"], en:["sing","to sing"]},
+  {pt:["ligar"], en:["call","to call","call by phone"]},
+  {pt:["encontrar"], en:["find","meet","to find","to meet"]},
+  {pt:["melhorar"], en:["get better","improve","to get better","to improve"]},
+  {pt:["piorar"], en:["get worse","to get worse"]},
+  {pt:["barulho"], en:["noise"]},
+  {pt:["empregado","empregada"], en:["employee"]},
+  {pt:["o voo","voo"], en:["the flight","flight"]},
+  {pt:["meio-dia","meio dia"], en:["midday","noon","12pm"]},
+  {pt:["meia-noite","meia noite"], en:["midnight","12am"]},
+  {pt:["florestas","floresta"], en:["forests","forest"]},
+  {pt:["orgulho"], en:["pride","proud"]},
+  {pt:["saudável"], en:["healthy"]},
+  {pt:["desde"], en:["since"]},
+  {pt:["até"], en:["until"]},
+  {pt:["anteontem"], en:["the day before yesterday","day before yesterday"]},
+  {pt:["ontem à noite","ontem a noite"], en:["last night"]},
+  {pt:["dias atrás","dias atras"], en:["days ago"]},
+  {pt:["porque"], en:["because"]},
+  {pt:["por causa de","por causa"], en:["because of"]},
+  {pt:["graças a","gracas a"], en:["thanks to"]},
 ];
 
 function norm(s){
@@ -1790,7 +1974,6 @@ function displayAnswer(item){
 
 function renderWrite(){
   wAnswered=false; wHintLevel=0;
-const hintBtn=document.getElementById('writeHint'); if(hintBtn) hintBtn.textContent='\uD83D\uDCA1 Hint';
   const item=currentW();
   document.getElementById('writeLabel').textContent = wDir==='PTEN' ? 'Translate into English:' : 'Translate into Portuguese:';
   document.getElementById('writePrompt').textContent = promptText(item);
@@ -1857,34 +2040,12 @@ document.getElementById('writeSkip').addEventListener('click',()=>{
   document.getElementById('writeCheck').style.display='none';
   document.getElementById('writeNext').style.display='inline-block';
 });
-const HINT_MAX_LEVELS = 3;
-function maskAnswer(ans, level){
-return ans.split(/(\s+|-)/).map(part=>{
-if(/^(\s+|-)$/.test(part) || part.length===0) return part;
-const len=part.length;
-let revealCount;
-if(level<=0) revealCount=0;
-else if(level===1) revealCount=1;
-else if(level===2) revealCount=Math.max(1,Math.ceil(len/2));
-else if(level===3) revealCount=Math.max(1,len-1);
-else revealCount=len;
-revealCount=Math.min(revealCount,len);
-return part.slice(0,revealCount) + '_'.repeat(len-revealCount);
-}).join('');
-}
 document.getElementById('writeHint').addEventListener('click',()=>{
-if(wAnswered) return;
-const item=currentW();
-const answers=answerList(item);
-const ans=answers[0];
-wHintLevel=Math.min(wHintLevel+1, HINT_MAX_LEVELS+1);
-const masked=maskAnswer(ans,wHintLevel);
-const levelLabel = wHintLevel>HINT_MAX_LEVELS ? 'Full answer' : ('Hint '+wHintLevel+'/'+HINT_MAX_LEVELS);
-const altNote = answers.length>1 ? (' ('+answers.length+' accepted answers)') : '';
-wFb.className='write-feedback show almost';
-wFb.textContent='\uD83D\uDCA1 '+levelLabel+': '+masked+altNote;
-const hintBtn=document.getElementById('writeHint');
-if(hintBtn) hintBtn.textContent = wHintLevel>HINT_MAX_LEVELS ? '\uD83D\uDCA1 Hint (done)' : ('\uD83D\uDCA1 Hint ('+wHintLevel+'/'+HINT_MAX_LEVELS+')');
+  if(wAnswered) return;
+  const ans=answerList(currentW())[0];
+  wHintLevel=Math.min(wHintLevel+1,ans.length);
+  wFb.className='write-feedback show almost';
+  wFb.textContent='💡 Hint: ' + ans.slice(0,wHintLevel) + '·'.repeat(Math.max(ans.length-wHintLevel,0));
 });
 wInput.addEventListener('keydown',e=>{
   if(e.key==='Enter'){ e.preventDefault(); wAnswered ? nextWrite() : checkWrite(); }

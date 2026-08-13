@@ -813,6 +813,26 @@
   </details>
 
   <details class="guide">
+    <summary>Lesson 16 — Preposition EM &amp; the contractions no / na / nos / nas</summary>
+    <div class="guide-body">
+      <p>The preposition <span class="pt">em</span> means <b>in / on / at</b>. When it comes before a definite article (o, a, os, as), the two <b>always merge</b> into one contracted word.</p>
+      <table class="conj">
+        <tbody>
+          <tr><th>Contraction</th><th>Example</th></tr>
+          <tr><td>em + o = <b>no</b></td><td class="hl">Eu moro no Brasil — I live in Brazil</td></tr>
+          <tr><td>em + a = <b>na</b></td><td class="hl">Ela está na escola — she is at school</td></tr>
+          <tr><td>em + os = <b>nos</b></td><td class="hl">Os livros estão nos armários — the books are in the cupboards</td></tr>
+          <tr><td>em + as = <b>nas</b></td><td class="hl">As chaves estão nas gavetas — the keys are in the drawers</td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <b>Location rule:</b> use <span class="pt">estar</span> + <span class="pt">em/no/na</span> for where something is. Pick the contraction by the gender/number of the noun: masculine → <b>no/nos</b>, feminine → <b>na/nas</b>. One key exception: <span class="pt">em casa</span> ("at home") stays plain — no article, no contraction.
+      </div>
+      <p><b>Other uses of EM:</b> months and dates — <span class="pt">em janeiro</span> (in January); and after certain verbs — <span class="pt">pensar em</span> (to think about), <span class="pt">acreditar em</span> (to believe in), e.g. <span class="pt">Penso em você</span> — I think about you.</p>
+    </div>
+  </details>
+
+  <details class="guide">
     <summary>⚠️ Corrections spotted in your notes</summary>
     <div class="guide-body">
       <div class="note">A few lines in the notes have slips worth fixing before they stick:</div>
@@ -1131,6 +1151,18 @@ const CARDS = [
   {c:"Preposition DE", f:"Eu vou de ônibus", b:"I go by bus", x:"Transport uses de"},
   {c:"Preposition DE", f:"Eu gosto de viajar", b:"I like to travel", x:"gostar always takes de"},
   {c:"Preposition DE", f:"Reclamar", b:"To complain"},
+      {c:"Preposition EM", f:"em + o → no", b:"in/on the (masc. sing.)", x:"em + o = no"},
+      {c:"Preposition EM", f:"em + a → na", b:"in/on the (fem. sing.)", x:"em + a = na"},
+      {c:"Preposition EM", f:"em + os → nos", b:"in/on the (masc. plural)", x:"em + os = nos"},
+      {c:"Preposition EM", f:"em + as → nas", b:"in/on the (fem. plural)", x:"em + as = nas"},
+      {c:"Preposition EM", f:"Eu moro no Brasil", b:"I live in Brazil", x:"em + o Brasil = no Brasil"},
+      {c:"Preposition EM", f:"Ela está na escola", b:"She is at school", x:"em + a escola = na escola"},
+      {c:"Preposition EM", f:"Os livros estão nos armários", b:"The books are in the cupboards", x:"em + os = nos"},
+      {c:"Preposition EM", f:"As chaves estão nas gavetas", b:"The keys are in the drawers", x:"em + as = nas"},
+      {c:"Preposition EM", f:"Estou em casa", b:"I'm at home", x:"em casa — no article, stays plain"},
+      {c:"Preposition EM", f:"Penso em você", b:"I think about you", x:"pensar em = to think about"},
+      {c:"Preposition EM", f:"Em janeiro", b:"In January", x:"em is used for months"},
+      {c:"Preposition EM", f:"Nós moramos na cidade", b:"We live in the city", x:"em + a cidade = na cidade"},
 ];
 
 
@@ -1231,6 +1263,16 @@ const QUIZZES = [
   ex:"With \"correto\", SER is standard: vocês são corretas / as respostas são corretas. Vocês → são."},
  {t:"mc",q:"Which sentence is correct for \"I am 30 years old\"?",opts:["Eu sou 30 anos","Eu estou 30 anos","Eu tenho 30 anos","Eu vou 30 anos"],a:2,conj:"ter",
   ex:"Bonus trap! Age uses neither ser nor estar — Portuguese says you HAVE years: eu tenho 30 anos. Same as tenho medo, tenho razão, tenho saudades."},
+    {t:"mc", q:"Eu moro ___ Brasil. (I live in Brazil)", opts:["no","na","em","nos"], a:0,
+      ex:"em + o Brasil = no Brasil (masculine singular)."},
+    {t:"mc", q:"Ela está ___ escola. (She is at school)", opts:["no","na","nas","em"], a:1,
+      ex:"em + a escola = na escola (feminine singular)."},
+    {t:"fill", q:"Fill the contraction: em + as = ___", a:["nas"],
+      ex:"em + as = nas (feminine plural)."},
+    {t:"mc", q:"As chaves estão ___ gavetas. (The keys are in the drawers)", opts:["nos","na","nas","no"], a:2,
+      ex:"em + as gavetas = nas gavetas (feminine plural)."},
+    {t:"fill", q:"Fill the contraction: em + os = ___", a:["nos"],
+      ex:"em + os = nos (masculine plural)."},
 ]},
 
 {id:"tercom",icon:"🤲",title:"TER, ESTAR COM & obligations",desc:"Sensations, fears, needs and \"have to\".",qs:[

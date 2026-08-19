@@ -785,6 +785,35 @@
   </details>
 
   <details class="guide">
+    <details class="guide">
+    <summary>Lessons 13–14 — The regular past tense (-IR verbs)</summary>
+    <div class="guide-body">
+      <p><b>Your -IR past tense!</b> For -IR verbs, the four endings are <span class="pt">-i, -iu, -imos, -iram</span> — almost identical to -ER, with one difference:</p>
+      <table class="conj">
+        <tr><th></th><th>PARTIR (to leave) — past</th><th>ending</th></tr>
+        <tr><td>Eu</td><td class="hl">parti</td><td>-i</td></tr>
+        <tr><td>Você / Ele / Ela</td><td>partiu</td><td>-iu</td></tr>
+        <tr><td>Nós</td><td>partimos</td><td>-imos</td></tr>
+        <tr><td>Vocês / Eles / Elas</td><td>partiram</td><td>-iram</td></tr>
+      </table>
+      <div class="note"><b>The one difference from -ER:</b> the <span class="pt">nós</span> form is <span class="pt">-imos</span> (partimos), not <span class="pt">-emos</span> (comemos) — the only spot where -IR and -ER split in the past tense, just like in the present tense.</div>
+      <p><b>These -IR verbs all follow the pattern:</b> <span class="pt">abrir, assistir, decidir, dividir, permitir, resistir, discutir</span>.</p>
+      <p><b>Example sentences:</b></p>
+      <ul>
+        <li><span class="pt">Eu abri a janela porque estava quente</span> — I opened the window because it was hot</li>
+        <li><span class="pt">Nós assistimos um filme ontem à noite</span> — We watched a film last night</li>
+        <li><span class="pt">Ela decidiu viajar sozinha</span> — She decided to travel alone</li>
+        <li><span class="pt">Eles dividiram a conta</span> — They split the bill</li>
+      </ul>
+      <div class="note"><b>Quick comparison — all three groups in the past tense:</b><br>
+        1º grupo (-AR): <span class="pt">-ei, -ou, -amos, -aram</span> → falei, falou, falamos, falaram<br>
+        2º grupo (-ER): <span class="pt">-i, -eu, -emos, -eram</span> → comi, comeu, comemos, comeram<br>
+        3º grupo (-IR): <span class="pt">-i, -iu, -imos, -iram</span> → parti, partiu, partimos, partiram
+      </div>
+    </div>
+  </details>
+
+  <details class="guide">
     <summary>Lesson 15 — Preposition DE &amp; saying "made of"</summary>
     <div class="guide-body">
       <p>The little word <span class="pt">de</span> does a lot of jobs. Here's when to reach for it:</p>
@@ -1236,6 +1265,14 @@ const CONJ = {
     note:"Ela percebeu que ele enganou ela. Perceber = to notice/realise, not \"perceive\" in the English sense."},
   merecerpast:{verb:"MERECER (to deserve) — regular past (-ER)",rows:[["Eu","mereci"],["Você / Ele / Ela","mereceu"],["Nós","merecemos"],["Vocês / Eles / Elas","mereceram"],["A gente","mereceu"]],
     note:"Você recebeu o que mereceu. Vocês mereceram ganhar o jogo."},
+  partirpast:{verb:"PARTIR (to leave) — regular past (-IR)",rows:[["Eu","parti"],["Você / Ele / Ela","partiu"],["Nós","partimos"],["Vocês / Eles / Elas","partiram"],["A gente","partiu"]],
+    note:"The -IR past endings: -i, -iu, -imos, -iram. Nearly identical to -ER, except nós is -imos (partimos), not -emos (comemos)."},
+  abrirpast:{verb:"ABRIR (to open) — regular past (-IR)",rows:[["Eu","abri"],["Você / Ele / Ela","abriu"],["Nós","abrimos"],["Vocês / Eles / Elas","abriram"],["A gente","abriu"]],
+    note:"Eu abri a janela porque estava quente. Regular -IR past, same pattern as partir, assistir, decidir, dividir."},
+  assistirpast:{verb:"ASSISTIR (to watch) — regular past (-IR)",rows:[["Eu","assisti"],["Você / Ele / Ela","assistiu"],["Nós","assistimos"],["Vocês / Eles / Elas","assistiram"],["A gente","assistiu"]],
+    note:"Nós assistimos um filme ontem à noite. Looks the same as the present nós form — context decides."},
+  decidirpast:{verb:"DECIDIR (to decide) — regular past (-IR)",rows:[["Eu","decidi"],["Você / Ele / Ela","decidiu"],["Nós","decidimos"],["Vocês / Eles / Elas","decidiram"],["A gente","decidiu"]],
+    note:"Ela decidiu viajar sozinha. Same -i, -iu, -imos, -iram pattern as partir and assistir."},
   feito:{verb:"SER DE / SER FEITO DE (to be made of)",rows:[["Origin (ser)","Eu sou de Londres"],["Material","A caneta é de plástico"],["Made of (feito)","O fio é feito de cobre"],["Transport","Eu vou de ônibus"],["After gostar","Eu gosto de viajar"]],
     note:"The little word DE does all of these. Location rule: ESTAR → na/no/em, SER → de/do/da."},
 };
@@ -1511,9 +1548,32 @@ const QUIZZES = [{"id":"emnona","icon":"📍","title":"EM · NO · NA","desc":"L
  {t:"fill",q:"Type the verb: Vocês ___ (merecer) ganhar o jogo. (you all deserved)",a:["mereceram"],conj:"merecerpast",
   ex:"Vocês mereceram. -ER vocês/eles past = -eram."},
  {t:"mc",q:"Which are the four -ER past endings?",opts:["-ei, -ou, -amos, -aram","-i, -eu, -emos, -eram","-o, -e, -emos, -em","-í, -iu, -imos, -iram"],a:1,conj:"comerpast",
-  ex:"-ER (and -IR) past: -i, -eu, -emos, -eram. Compare -AR past: -ei, -ou, -amos, -aram."},
+  ex:"-ER past: -i, -eu, -emos, -eram. Compare -AR past: -ei, -ou, -amos, -aram. -IR looks almost the same, but nós is -imos (partimos), not -emos."},
  {t:"mc",q:"Você recebeu o que ___. (merecer → you deserved)",opts:["mereceu","mereci","mereceram","merece"],a:0,conj:"merecerpast",
   ex:"Você recebeu o que mereceu — you got what you deserved. Both verbs in the -eu (você) past."},
+]},
+
+{id:"pastregularir",icon:"🚪",title:"Regular past tense (-IR)",desc:"Lessons 13–14: parti, abriu, assistimos — the -i/-iu/-imos/-iram endings.",qs:[
+ {t:"mc",q:"Eu ___ a janela porque estava quente. (abrir → I opened)",opts:["abriu","abri","abro","abriram"],a:1,conj:"abrirpast",
+  ex:"The -IR past eu ending is -i: eu abri. Same as the -ER eu ending (comi)."},
+ {t:"fill",q:"Type the verb: Ela ___ (decidir) viajar sozinha. (she decided)",a:["decidiu"],conj:"decidirpast",
+  ex:"Ela decidiu. The você/ele/ela -IR past ending is -iu: decidiu, partiu, assistiu."},
+ {t:"mc",q:"Nós ___ um filme ontem à noite. (assistir → we watched)",opts:["assistemos","assistimos","assistiram","assiste"],a:1,conj:"assistirpast",
+  ex:"Nós assistimos. -IR nós past is -imos — the ONE spot where -IR differs from -ER (comemos vs assistimos)."},
+ {t:"fill",q:"Type the verb: Eles ___ (partir) de manhã cedo. (they left)",a:["partiram"],conj:"partirpast",
+  ex:"Eles partiram. Eles/vocês -IR past → -iram, just like -ER's -eram but with an i."},
+ {t:"mc",q:"Which are the four -IR past endings?",opts:["-ei, -ou, -amos, -aram","-i, -eu, -emos, -eram","-i, -iu, -imos, -iram","-o, -e, -imos, -em"],a:2,conj:"partirpast",
+  ex:"-IR past: -i, -iu, -imos, -iram. Compare -ER: -i, -eu, -emos, -eram — only the você/ele/ela and nós forms swap e for i."},
+ {t:"fill",q:"Type the verb: Eles ___ (dividir) a conta. (they split)",a:["dividiram"],conj:"partirpast",
+  ex:"Eles dividiram a conta. Regular -IR past, same pattern as partiram."},
+ {t:"mc",q:"Você ___ ao jogo ontem à noite? (assistir → did you watch)",opts:["assisti","assistiu","assistimos","assistiram"],a:1,conj:"assistirpast",
+  ex:"Você assistiu ao jogo? Você/ele/ela -IR past = -iu."},
+ {t:"mc",q:"Nós ___ de manhã cedo. (partir → we left)",opts:["partemos","partimos","partamos","partem"],a:1,conj:"partirpast",
+  ex:"Nós partimos — -IR nós past keeps the i, exactly like the present tense nós form."},
+ {t:"fill",q:"Type the verb: Eu ___ (assistir) o show sozinho. (I watched)",a:["assisti"],conj:"assistirpast",
+  ex:"Eu assisti o show sozinho. Eu -IR past = -i, same ending as -ER."},
+ {t:"mc",q:"-ER and -IR past tense are identical except for…",opts:["The eu form","The você/ele/ela form","The nós form","The eles/vocês form"],a:2,conj:"partirpast",
+  ex:"They only split at nós: comemos (-ER) vs partimos (-IR). Every other person shares the same vowel pattern."},
 ]},
 
 {id:"madeof",icon:"💍",title:"Prepositions & \"made of\"",desc:"Lesson 15: the preposition DE, materials, origin, transport and the na/no/em vs de/do/da rule.",qs:[

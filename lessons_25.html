@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lições 25+ · Portuguese quizzes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F6F5; --card:#FFFFFF; --ink:#1E2422; --muted:#56625E; --line:#D5DDDA;
+  --jade:#0B7A63; --jade-soft:#DDF0EA; --sun:#E8A317; --sun-soft:#FBEFD2;
+  --wrong:#B93A25; --wrong-soft:#F8E1DC;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111715; --card:#19211F; --ink:#E7EEEB; --muted:#9BA9A4; --line:#2B3633;
+    --jade:#3DC49F; --jade-soft:#173A31; --sun:#F2B632; --sun-soft:#3A2F14;
+    --wrong:#F0806A; --wrong-soft:#3E211B;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111715; --card:#19211F; --ink:#E7EEEB; --muted:#9BA9A4; --line:#2B3633;
+  --jade:#3DC49F; --jade-soft:#173A31; --sun:#F2B632; --sun-soft:#3A2F14;
+  --wrong:#F0806A; --wrong-soft:#3E211B;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px 64px}
+
+/* Copacabana pavement band */
+.calcada{height:54px;width:100%;color:var(--ink);display:block}
+header{padding:28px 0 8px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(44px,11vw,76px);line-height:.95;letter-spacing:-.03em;margin:0 0 12px}
+.lede{color:var(--muted);margin:0 0 28px;max-width:52ch}
+
+.menu{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.menu li{border-bottom:1px solid var(--line)}
+.menu button{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 16px;width:100%;padding:18px 4px}
+.menu button:hover .m-title{color:var(--jade)}
+.menu button:focus-visible{outline:3px solid var(--sun);outline-offset:2px;border-radius:4px}
+.m-title{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em}
+.m-count{grid-row:1/3;grid-column:2;align-self:center;font-family:var(--display);font-weight:700;color:var(--muted);font-size:15px;white-space:nowrap}
+.m-desc{color:var(--muted);font-size:15px}
+.menu li.mix .m-title{color:var(--jade)}
+
+details.fixes{margin-top:36px;background:var(--sun-soft);border-radius:14px;padding:4px 18px}
+details.fixes summary{cursor:pointer;font-family:var(--display);font-weight:700;padding:12px 0;font-size:18px}
+details.fixes ul{margin:0 0 16px;padding-left:20px}
+details.fixes li{margin:6px 0}
+.pt{font-weight:700}
+
+/* Quiz */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 0 10px;gap:12px}
+.link{all:unset;cursor:pointer;color:var(--jade);font-weight:700}
+.link:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:4px}
+.count{color:var(--muted);font-family:var(--display);font-weight:700}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:28px}
+.bar i{display:block;height:100%;background:var(--jade);width:0;transition:width .3s ease}
+.qtopic{color:var(--muted);font-size:15px;margin:0 0 6px}
+.qtext{font-family:var(--display);font-weight:700;font-size:clamp(24px,5.6vw,32px);line-height:1.2;letter-spacing:-.01em;margin:0 0 24px}
+.qtext .blank{display:inline-block;min-width:3.2em;border-bottom:3px solid var(--sun);transform:translateY(-4px)}
+.opts{display:grid;gap:10px}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 16px;font-size:18px;transition:border-color .15s}
+.opt:hover:not([disabled]){border-color:var(--ink)}
+.opt:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--jade);background:var(--jade-soft)}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-soft)}
+.typer{display:flex;gap:10px;flex-wrap:wrap}
+.typer input{flex:1 1 220px;font:inherit;font-size:20px;padding:13px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.typer input:focus{outline:none;border-color:var(--jade)}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;background:var(--ink);color:var(--bg);font-weight:700;padding:14px 22px;border-radius:12px;text-align:center}
+.btn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+.hint{color:var(--muted);font-size:14px;margin-top:8px}
+.feedback{margin-top:22px;border-left:5px solid var(--jade);padding:4px 0 4px 16px}
+.feedback.bad{border-color:var(--wrong)}
+.verdict{font-family:var(--display);font-weight:700;font-size:20px;margin:0 0 4px}
+.feedback p{margin:4px 0}
+.next{margin-top:20px}
+
+.score{font-family:var(--display);font-weight:800;font-size:clamp(64px,18vw,112px);line-height:1;letter-spacing:-.04em;margin:18px 0 4px}
+.score small{font-size:.4em;color:var(--muted);letter-spacing:0}
+.misses{list-style:none;padding:0;margin:20px 0;border-top:1px solid var(--line)}
+.misses li{padding:12px 0;border-bottom:1px solid var(--line)}
+.misses .ans{color:var(--jade);font-weight:700}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg class="calcada" viewBox="0 0 240 54" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <pattern id="wave" width="60" height="54" patternUnits="userSpaceOnUse">
+      <path d="M0 14 C15 0,15 28,30 14 S45 0,60 14 L60 27 C45 13,45 41,30 27 S15 13,0 27 Z" fill="currentColor"/>
+      <path d="M0 41 C15 27,15 55,30 41 S45 27,60 41 L60 54 L0 54 Z" fill="currentColor"/>
+    </pattern>
+  </defs>
+  <rect width="240" height="54" fill="url(#wave)"/>
+</svg>
+
+<main class="wrap">
+  <section id="home">
+    <header>
+      <p style="margin:0 0 14px"><a href="/" style="color:var(--jade);font-weight:700;text-decoration:none">← Back to Study Hub</a></p>
+      <h1>Lições 25+</h1>
+      <p class="lede">Por, pelo and pela, the irregular past, ficar, the present continuous and all your new words. Pick a quiz, or mix the lot. Accents are optional when you type.</p>
+    </header>
+    <ul class="menu" id="menu"></ul>
+
+    <details class="fixes">
+      <summary>A few fixes for your notes</summary>
+      <ul>
+        <li><span class="pt">Eu estou indo embora desse lugar</span> means "I'm leaving this place", not "I live in this place".</li>
+        <li><span class="pt">Não estou encontrando o meu celular</span> is "I can't find my phone" (right now), not "I did not find".</li>
+        <li><span class="pt">Eu vou me encontrar com ela mais tarde</span> is "I'm going to meet her later".</li>
+        <li><span class="pt">Eu acho que não</span> is "I don't think so".</li>
+        <li><span class="pt">Ela ficou nervosa antes da entrevista</span> is "before the interview" (antes <b>da</b>, and before, not after).</li>
+        <li><span class="pt">Os alunos ficaram</span> em silêncio, since os alunos = eles. Ficamos is for nós.</li>
+        <li>Poder in the past: eu <span class="pt">pude</span>, você/ele/a gente <span class="pt">pôde</span> (with the hat; pode is present).</li>
+        <li>Pôr in the past: eu <span class="pt">pus</span>, ele <span class="pt">pôs</span>. Deixar: eu <span class="pt">deixei</span>, ele deixou.</li>
+        <li>Spellings: <span class="pt">te vejo amanhã</span>, <span class="pt">cheio/cheia</span>, <span class="pt">quieto</span>, <span class="pt">devolver</span>, <span class="pt">força</span>, <span class="pt">chão</span>, <span class="pt">abraço</span>, <span class="pt">carnaval</span>, <span class="pt">as chaves estão</span>.</li>
+        <li><span class="pt">Valeu a pena</span> is "it was worth it" (past). <span class="pt">Dar uma volta</span> itself isn't past, it just means "go for a walk/spin".</li>
+        <li><span class="pt">Crescer</span> = to grow up, <span class="pt">quintal</span> = backyard, <span class="pt">multidão</span> = a crowd.</li>
+        <li><span class="pt">Ela viajou pra Itália</span> is past: "she travelled to Italy". And Flamengo is a football club, not a flamingo.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section id="quiz" hidden>
+    <div class="topbar">
+      <button class="link" id="back">All quizzes</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="bar"><i id="barfill"></i></div>
+    <p class="qtopic" id="qtopic"></p>
+    <h2 class="qtext" id="qtext"></h2>
+    <div id="answerArea"></div>
+    <div id="feedback"></div>
+  </section>
+
+  <section id="done" hidden>
+    <div class="topbar"><button class="link" id="back2">All quizzes</button></div>
+    <p class="qtopic" id="doneTitle"></p>
+    <div class="score" id="score"></div>
+    <p id="doneMsg"></p>
+    <ul class="misses" id="misses"></ul>
+    <div class="row">
+      <button class="btn" id="again">Try again</button>
+      <button class="btn ghost" id="home2">All quizzes</button>
+    </div>
+  </section>
+</main>
+
+<script>
+const B = "<span class=\"blank\"></span>";
+
+const QUIZZES = [
+{ id:"por", title:"Por, pelo, pela", desc:"Through, for, thanks, prices, and when to use pra, na, do instead.",
+qs:[
+ {t:"mc",q:"Obrigada "+B+" ajuda!",opts:["pela","pelo","pra","da"],a:"pela",ex:"Thanking uses POR. Ajuda is feminine: por + a = pela."},
+ {t:"mc",q:"Eu falo com a minha mãe "+B+" telefone.",opts:["pelo","pela","no","pro"],a:"pelo",ex:"Pelo telefone = on/by phone. O telefone is masculine: por + o = pelo."},
+ {t:"mc",q:"\"Eu vou pelo parque\" means…",opts:["I'm going through the park","I'm going to the park","I'm in the park","I'm coming from the park"],a:"I'm going through the park",ex:"Pelo = the way you pass through (caminho). Pro parque = the park is your destination."},
+ {t:"mc",q:"Paguei 50 reais "+B+" camiseta.",opts:["pela","pra","na","da"],a:"pela",ex:"Prices use POR: I paid 50 reais for the T-shirt. A camiseta → pela."},
+ {t:"mc",q:"Which one means \"she travelled around Europe\"?",opts:["Ela viajou pela Europa","Ela viajou para a Europa","Ela viajou da Europa","Ela viajou na Europa"],a:"Ela viajou pela Europa",ex:"Pela Europa = passing through, around. Para a Europa = Europe was the destination."},
+ {t:"mc",q:"Ele entrou "+B+" janela.",opts:["pela","na","da","pra"],a:"pela",ex:"He came in THROUGH the window. A janela → pela."},
+ {t:"mc",q:B+" menos uma vez por semana eu cozinho.",opts:["Pelo","Pela","Por","Para"],a:"Pelo",ex:"Pelo menos = at least. A fixed expression worth learning whole."},
+ {t:"mc",q:"Ela foi pro Brasil "+B+" primeira vez.",opts:["pela","pelo","na","por"],a:"pela",ex:"Pela primeira vez = for the first time. A vez is feminine."},
+ {t:"mc",q:"Eu sou "+B+" Estados Unidos.",opts:["dos","do","pelos","nos"],a:"dos",ex:"Os Estados Unidos is masculine plural: de + os = dos."},
+ {t:"mc",q:"Esse presente é "+B+" você.",opts:["pra","por","pela","de"],a:"pra",ex:"PRA for who it's for, or the destination: this present is for you."},
+ {t:"mc",q:"Nós estamos "+B+" cozinha. / Nós vamos "+B+" cozinha.",opts:["na / pra","pela / na","da / pra","na / pela"],a:"na / pra",ex:"Being somewhere: EM (na cozinha). Going there: PRA (pra cozinha)."},
+ {t:"mc",q:"\"Pelo visto\" / \"pelo jeito\" means…",opts:["Apparently, it seems","By sight","Of course","At least"],a:"Apparently, it seems",ex:"Pelo visto, vai chover = apparently it's going to rain."},
+ {t:"type",q:"por + as = ?",a:["pelas"],ex:"Pelo, pela, pelos, pelas. Pelas ruas = through the streets."},
+ {t:"mc",q:"Eu vou "+B+" Brasil "+B+" Inglaterra. (from → to)",opts:["do / pra","pelo / pra","pro / da","no / pela"],a:"do / pra",ex:"DO = from (de + o Brasil), PRA = to (a Inglaterra, feminine)."},
+ {t:"mc",q:"Quando eu vou pra academia eu passo "+B+" café.",opts:["pelo","pro","do","no"],a:"pelo",ex:"You pass BY/THROUGH the café on the way, so pelo (o café)."}
+]},
+
+{ id:"past", title:"Irregular past", desc:"Fui, fiz, trouxe, veio… the eu and você/ele/a gente forms.",
+qs:[
+ {t:"type",q:"fazer → eu "+B,a:["fiz"],ex:"Eu fiz = I did/made. Você/ele/a gente fez."},
+ {t:"type",q:"trazer → eu "+B,a:["trouxe"],ex:"Eu trouxe = I brought. Same for você/ele: trouxe."},
+ {t:"type",q:"ver → você "+B,a:["viu"],ex:"Eu vi, você viu. Você viu as notícias hoje?"},
+ {t:"type",q:"estar → eu "+B,a:["estive"],ex:"Eu estive = I was (somewhere). Você/ele esteve."},
+ {t:"type",q:"ter → a gente "+B,a:["teve"],ex:"Eu tive, você/ele/a gente teve."},
+ {t:"type",q:"vir → ele "+B,a:["veio"],ex:"Eu vim, ele veio. Ele veio pra festa = he came to the party."},
+ {t:"type",q:"dar → você "+B,a:["deu"],ex:"Eu dei, você deu. Ela me deu um presente."},
+ {t:"type",q:"poder → eu "+B,a:["pude"],ex:"Eu pude, você/ele pôde (with the hat)."},
+ {t:"type",q:"sair → ela "+B,a:["saiu"],ex:"Eu saí, ela saiu."},
+ {t:"type",q:"querer → você "+B,a:["quis"],ex:"Eu quis, você quis. Same form for both."},
+ {t:"type",q:"dizer → eu "+B,a:["disse"],ex:"Eu disse, ele disse."},
+ {t:"type",q:"saber → eu "+B,a:["soube"],ex:"Eu soube = I found out / knew."},
+ {t:"type",q:"pôr → eu "+B,a:["pus"],ex:"Eu pus, ele pôs = I put, he put."},
+ {t:"mc",q:"\"Eu vi\" or \"Eu vim\" — which means \"I saw\"?",opts:["Eu vi","Eu vim"],a:"Eu vi",ex:"Vi (ver) = I saw. Vim (vir) = I came. One letter, big difference."},
+ {t:"mc",q:"\"Ela quis ir embora\" means…",opts:["She wanted to leave","She has to leave","She went away","She could leave"],a:"She wanted to leave",ex:"Quis = wanted (querer), ir embora = to leave."}
+]},
+
+{ id:"ana", title:"A Ana e o Brasil", desc:"Your class story. Put every verb in the past.",
+qs:[
+ {t:"type",q:"Eu "+B+" (querer) aprender português para falar com os brasileiros!",a:["quis"],ex:"Eu quis aprender português."},
+ {t:"type",q:"Em novembro eu "+B+" (viajar) pro Brasil…",a:["viajei"],ex:"Regular -AR: viajar → viajei."},
+ {t:"type",q:"…e eu "+B+" (poder) praticar muito…",a:["pude"],ex:"Eu pude praticar muito."},
+ {t:"type",q:"…porque eu "+B+" (ter) que falar português com todo mundo!",a:["tive"],ex:"Ter que = to have to. Eu tive que falar."},
+ {t:"type",q:"…com os amigos que eu "+B+" (fazer) no Brasil.",a:["fiz"],ex:"Fazer amigos = to make friends. Eu fiz."},
+ {t:"type",q:"Eu "+B+" (gostar) muito!",a:["gostei"],ex:"Gostar → gostei."},
+ {t:"type",q:"Eu "+B+" (sair) pra conhecer lugares lindos…",a:["sai"],ex:"Eu saí (the accent keeps the stress on the i)."},
+ {t:"type",q:"…eu "+B+" (ver) muitas praias lindas…",a:["vi"],ex:"Eu vi muitas praias."},
+ {t:"type",q:"Eu até "+B+" (aprender) a sambar!",a:["aprendi"],ex:"Regular -ER: aprender → aprendi."},
+ {t:"type",q:"Eu "+B+" (brincar) com as crianças na praia…",a:["brinquei"],ex:"Brincar → brinquei. The c becomes qu to keep the hard sound."},
+ {t:"type",q:"…e eu "+B+" (dar) um presente pros meus sogros.",a:["dei"],ex:"Eu dei um presente."},
+ {t:"type",q:"Quando eu "+B+" (voltar) pra Inglaterra…",a:["voltei"],ex:"Voltar → voltei."},
+ {t:"type",q:"…eu "+B+" (trazer) muitas havaianas, porque no Brasil é mais barato!",a:["trouxe"],ex:"Eu trouxe = I brought."},
+ {t:"type",q:"Eu "+B+" (dizer) que vou voltar pro Brasil!",a:["disse"],ex:"Eu disse = I said."}
+]},
+
+{ id:"ficar", title:"Ficar", desc:"To stay, to be located, to become, to turn out.",
+qs:[
+ {t:"mc",q:"\"O banco fica longe?\" Here ficar means…",opts:["To be located","To stay","To become","To turn out"],a:"To be located",ex:"Is the bank far? Ficar for where places are."},
+ {t:"mc",q:"\"Ela ficou feliz com a notícia\" means…",opts:["She became happy with the news","She stayed happy","She is located happily","She was always happy"],a:"She became happy with the news",ex:"Ficar + feeling = to become/get."},
+ {t:"mc",q:"\"O trabalho ficou ótimo\" means…",opts:["The work turned out great","The work stayed great","The work is located well","The work became hard"],a:"The work turned out great",ex:"Ficar for results: ficou muito bom = it came out really well."},
+ {t:"mc",q:"\"Nós podemos ficar aqui até parar de chover\" means…",opts:["We can stay here until it stops raining","We can go until it rains","We stopped here because it rained","We became wet in the rain"],a:"We can stay here until it stops raining",ex:"Ficar = to stay. Parar de = to stop (doing)."},
+ {t:"type",q:"Eu "+B+" muito feliz com a surpresa. (past)",a:["fiquei"],ex:"Ficar → fiquei. The c becomes qu before e."},
+ {t:"type",q:"Eles "+B+" cansados depois da caminhada longa. (past)",a:["ficaram"],ex:"Eles ficaram = they got/became."},
+ {t:"mc",q:"Os alunos "+B+" em silêncio enquanto a professora falava.",opts:["ficaram","ficamos","ficou","fiquei"],a:"ficaram",ex:"Os alunos = eles, so ficaram. (Ficamos would be nós.)"},
+ {t:"mc",q:"\"Eles ficaram no carnaval, mas não começaram a namorar\" means…",opts:["They made out at carnival but aren't dating","They stayed at carnival but didn't dance","They got tired at carnival","They met at carnival and got married"],a:"They made out at carnival but aren't dating",ex:"Ficar (com alguém) = casual kissing. Namorar = to be in a relationship."},
+ {t:"mc",q:"\"Eu estou ficando irritado\" means…",opts:["I'm getting irritated","I'm staying calm","I was irritated","I'm irritating"],a:"I'm getting irritated",ex:"Estar + ficando = becoming, gradually, right now."},
+ {t:"mc",q:"\"A minha casa fica perto daqui\" means…",opts:["My house is close to here","My house stays here","I'm staying at home","My house is far away"],a:"My house is close to here",ex:"Location again: fica perto = is near."}
+]},
+
+{ id:"ndo", title:"Present continuous", desc:"Estar + -ndo: estou falando, tá comendo, tô indo.",
+qs:[
+ {t:"type",q:"falar → estou "+B,a:["falando"],ex:"-AR → -ANDO."},
+ {t:"type",q:"comer → estou "+B,a:["comendo"],ex:"-ER → -ENDO."},
+ {t:"type",q:"abrir → estou "+B,a:["abrindo"],ex:"-IR → -INDO."},
+ {t:"type",q:"ir → estou "+B,a:["indo"],ex:"Estou indo = I'm going / on my way."},
+ {t:"type",q:"fazer → está "+B,a:["fazendo"],ex:"O que você está fazendo? = what are you doing?"},
+ {t:"mc",q:"Nós "+B+" aprendendo um idioma novo.",opts:["estamos","estão","estou","está"],a:"estamos",ex:"Estar: eu estou, você/ele está, nós estamos, eles estão."},
+ {t:"mc",q:"Eles "+B+" te chamando.",opts:["estão","estamos","está","são"],a:"estão",ex:"They are calling you."},
+ {t:"mc",q:"How do you say \"I like reading\"?",opts:["Eu gosto de ler","Eu gosto lendo","Eu estou gostando ler","Eu gosto de lendo"],a:"Eu gosto de ler",ex:"When -ing is a noun in English, Portuguese uses the infinitive: gostar DE + ler."},
+ {t:"mc",q:"\"O que cê tá fazendo?\" means…",opts:["What are you doing?","What did you do?","What will you do?","Where are you going?"],a:"What are you doing?",ex:"Spoken Brazilian: você → cê, está → tá, estou → tô."},
+ {t:"mc",q:"\"Tô\" is short for…",opts:["estou","está","todo","tomar"],a:"estou",ex:"Tô cansada = estou cansada."},
+ {t:"mc",q:"\"Ela está escondendo alguma coisa\" means…",opts:["She is hiding something","She is running away","She is looking for something","She is falling"],a:"She is hiding something",ex:"Esconder → escondendo. Fugindo = running away, caindo = falling."},
+ {t:"mc",q:"\"Não estou encontrando o meu celular\" means…",opts:["I can't find my phone","I didn't find my phone","I'm not meeting my phone","My phone isn't working"],a:"I can't find my phone",ex:"It's happening now: right now I'm not finding it."},
+ {t:"mc",q:"\"Aonde você está indo?\" means…",opts:["Where are you going?","Where have you been?","When are you leaving?","Where do you live?"],a:"Where are you going?",ex:"Aonde = to where. Indo = going."},
+ {t:"mc",q:"\"O Flamengo está perdendo a partida\" means…",opts:["Flamengo is losing the match","Flamengo lost the match","Flamengo is winning","Flamengo is leaving the party"],a:"Flamengo is losing the match",ex:"Perder → perdendo. Flamengo is a Rio football club."},
+ {t:"mc",q:"\"Eu achei o meu lápis\" means…",opts:["I found my pencil","I think it's my pencil","I'm looking for my pencil","I lost my pencil"],a:"I found my pencil",ex:"Achar = to find, and also to think (eu acho que…). Ele se acha = he thinks he's all that."},
+ {t:"mc",q:"\"A gente está pensando em sair pra se divertir\" means…",opts:["We're thinking of going out to have fun","We went out and had fun","We have to leave now","We're tired of going out"],a:"We're thinking of going out to have fun",ex:"Pensar EM fazer algo = to think about doing something."}
+]}
+];
+
+const VOCAB = [
+ ["dar uma volta","to go for a walk / a spin"],["valeu a pena","it was worth it"],["casar","to get married"],
+ ["mandar","to send"],["anotar","to write down"],["endereço","address"],["aquele","that (one)"],
+ ["calçada","pavement"],["voz","voice"],["voo de volta","return flight"],["voo de ida","outbound flight"],
+ ["paisagem","landscape"],["esquisito","strange, weird"],["pedra","stone, rock"],["força","strength"],
+ ["devolver","to give back"],["ir embora","to leave, go away"],["de repente","suddenly"],
+ ["desaparecer","to disappear"],["amizade","friendship"],["animal selvagem","wild animal"],
+ ["nascer","to be born"],["crescer","to grow up"],["parede","wall"],["levar um susto","to get a fright"],
+ ["voar","to fly"],["chão","floor"],["multidão","crowd"],["desenhos","drawings, cartoons"],["pulso","wrist"],
+ ["quintal","backyard"],["começar","to start"],["parar","to stop"],["terminar","to finish"],
+ ["cheio","full, busy"],["vazio","empty"],["suar","to sweat"],["cheiroso","nice-smelling"],
+ ["campeão","champion"],["levar","to take, carry"],["cumprimentar","to greet"],
+ ["beijo no rosto","kiss on the cheek"],["abraço","hug"],["apertar a mão","to shake hands"],
+ ["desconhecido","stranger"],["carinhoso","affectionate"],["em ponto","on the dot"],["pontual","punctual"],
+ ["atrasado","late"],["privada","toilet"],["lixeira","bin"],["cano","pipe"],["entupir","to clog, block"],
+ ["desentupir","to unclog"],["placa","sign"],["refeição","meal"],["leve","light (not heavy)"],
+ ["eu acredito","I believe"],["quieto","quiet"],["faxina","cleaning"],["entrevista","interview"],
+ ["anoitecer","to get dark"],["namorar","to date, be in a relationship"],["fedendo","stinking"],
+ ["caindo","falling"],["fugindo","running away"],["escondendo","hiding"],["sofrendo","suffering"]
+];
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function vocabQs(n){
+  return shuffle(VOCAB).slice(0,n).map((w,i)=>{
+    const toEn = i%2===0;
+    const others = shuffle(VOCAB.filter(v=>v!==w)).slice(0,3);
+    if(toEn) return {t:"mc",q:"\""+w[0]+"\" means…",opts:[w[1],...others.map(o=>o[1])],a:w[1],ex:w[0]+" = "+w[1]+"."};
+    return {t:"mc",q:"How do you say \""+w[1]+"\"?",opts:[w[0],...others.map(o=>o[0])],a:w[0],ex:w[1]+" = "+w[0]+"."};
+  });
+}
+
+const MENU = [
+  ...QUIZZES.map(z=>({id:z.id,title:z.title,desc:z.desc,count:z.qs.length+" questions"})),
+  {id:"vocab",title:"New words",desc:"20 random words from Vocabulary I and II, both directions.",count:"20 questions"},
+  {id:"mix",title:"Mix everything",desc:"25 questions pulled from every quiz above.",count:"25 questions"}
+];
+
+const $ = id=>document.getElementById(id);
+let current=null, qs=[], idx=0, right=0, missed=[];
+
+function buildMenu(){
+  $("menu").innerHTML = MENU.map(m=>`<li class="${m.id==='mix'?'mix':''}"><button data-id="${m.id}"><span class="m-title">${m.title}</span><span class="m-count">${m.count}</span><span class="m-desc">${m.desc}</span></button></li>`).join("");
+  $("menu").querySelectorAll("button").forEach(b=>b.onclick=()=>start(b.dataset.id));
+}
+
+function start(id){
+  current=MENU.find(m=>m.id===id);
+  if(id==="vocab") qs=vocabQs(20);
+  else if(id==="mix"){
+    const all=[];QUIZZES.forEach(z=>z.qs.forEach(q=>all.push({...q,topic:z.title})));
+    qs=shuffle([...shuffle(all).slice(0,19),...vocabQs(6).map(q=>({...q,topic:"New words"}))]);
+  } else {
+    const z=QUIZZES.find(z=>z.id===id);
+    qs=(id==="ana")?z.qs.slice():shuffle(z.qs);
+  }
+  idx=0;right=0;missed=[];
+  show("quiz");render();
+}
+
+function show(which){["home","quiz","done"].forEach(s=>$(s).hidden=(s!==which));window.scrollTo(0,0)}
+
+function norm(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[.!?,]/g,"").replace(/\s+/g," ").trim()}
+
+function render(){
+  const q=qs[idx];
+  $("count").textContent=(idx+1)+" / "+qs.length;
+  $("barfill").style.width=(idx/qs.length*100)+"%";
+  $("qtopic").textContent=q.topic||current.title;
+  $("qtext").innerHTML=q.q;
+  $("feedback").innerHTML="";
+  const area=$("answerArea");
+  if(q.t==="mc"){
+    const opts=(current.id==="ana")?q.opts:shuffle(q.opts);
+    area.innerHTML=`<div class="opts">${opts.map(o=>`<button class="opt">${o}</button>`).join("")}</div>`;
+    area.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+      const ok=b.textContent===q.a;
+      area.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.textContent===q.a)x.classList.add("right")});
+      if(!ok)b.classList.add("wrong");
+      answer(ok,q,b.textContent);
+    });
+  } else {
+    area.innerHTML=`<div class="typer"><input id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer" placeholder="Type your answer"><button class="btn" id="check">Check</button></div><p class="hint">Accents optional.</p>`;
+    const inp=$("inp");inp.focus();
+    const go=()=>{
+      if(!inp.value.trim())return;
+      const ok=q.a.some(a=>norm(a)===norm(inp.value));
+      inp.disabled=true;$("check").remove();
+      answer(ok,q,inp.value);
+    };
+    $("check").onclick=go;
+    inp.onkeydown=e=>{if(e.key==="Enter")go()};
+  }
+}
+
+const GOOD=["Certinho!","Isso aí!","Muito bem!","Perfeito!","Boa!"];
+const BAD=["Quase!","Not quite.","Almost there."];
+function answer(ok,q,given){
+  if(ok)right++;else missed.push({q:q.q,a:q.t==="mc"?q.a:q.a[0],given});
+  const verdict=ok?GOOD[Math.floor(Math.random()*GOOD.length)]:BAD[Math.floor(Math.random()*BAD.length)];
+  const ans=q.t==="type"&&!ok?`<p>Answer: <span class="pt">${q.a[0]}</span></p>`:"";
+  $("feedback").innerHTML=`<div class="feedback ${ok?"":"bad"}"><p class="verdict">${verdict}</p>${ans}<p>${q.ex}</p></div><button class="btn next" id="next">${idx+1<qs.length?"Next question":"See results"}</button>`;
+  const nx=$("next");nx.focus();nx.onclick=next;
+}
+
+function next(){idx++;if(idx<qs.length)render();else finish()}
+
+function finish(){
+  $("barfill").style.width="100%";
+  $("doneTitle").textContent=current.title;
+  $("score").innerHTML=right+"<small> / "+qs.length+"</small>";
+  const pct=right/qs.length;
+  $("doneMsg").textContent=pct===1?"Every single one. Parabéns!":pct>=.8?"Really solid. Just a couple to look at again.":pct>=.5?"Good going. Here's what to review.":"These are fresh, so this is normal. Review below and go again.";
+  $("misses").innerHTML=missed.map(m=>`<li>${m.q.replace(/<span class="blank"><\/span>/g,"___")}<br><span class="ans">${m.a}</span></li>`).join("");
+  show("done");
+}
+
+$("back").onclick=$("back2").onclick=$("home2").onclick=()=>show("home");
+$("again").onclick=()=>start(current.id);
+buildMenu();
+</script>
+</body>
+</html>

@@ -2084,6 +2084,15 @@ QUIZZES.forEach((qz,i)=>{
   menuGrid.appendChild(b);
 });
 
+/* Lessons 25+ quiz page (separate file in this repo) */
+(()=>{const a=document.createElement('a');
+  a.className='quiz-card';a.href='lessons_25.html';a.style.display='block';a.style.textDecoration='none';a.style.borderTopColor='var(--sun)';
+  a.innerHTML=`<span class="qc-icon">🇧🇷</span>
+    <div class="qc-title">Lessons 25+ (all new quizzes)</div>
+    <div class="qc-desc">Por/pelo/pela, irregular past, A Ana e o Brasil, ficar, present continuous (estar + -ndo) and all your new words.</div>
+    <div class="qc-meta">7 quizzes in one place</div>`;
+  menuGrid.prepend(a);})();
+
 /* external practice link — opens the teacher's site in a new tab */
 const EXTERNAL_PRACTICE=[{icon:"🔗",title:"Verb Conjugation Practice",desc:"Practice conjugating Portuguese verbs across all tenses. Opens in a new tab.",url:"https://www.verbugata.com/"},
   {icon:"📝",title:"Past Tense Practice",desc:"Extra practice from your teacher. Opens in a new tab.",

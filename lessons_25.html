@@ -104,6 +104,34 @@ mark.bad{background:var(--wrong-soft);color:var(--wrong);border-radius:4px;paddi
 .fixlist{margin:6px 0;padding-left:20px}
 .feedback .why{color:var(--muted)}
 .feedback s{color:var(--wrong)}
+.menu li.mine .m-title{color:var(--wrong)}
+.menu li.mine.empty .m-title{color:var(--muted)}
+.recap-h{font-family:var(--display);font-weight:800;font-size:28px;margin:34px 0 4px;letter-spacing:-.01em}
+.recap-sub{color:var(--muted);margin:0 0 14px}
+.recap{border-top:2px solid var(--ink);padding:16px 0 6px}
+.recap h3{font-family:var(--display);font-size:22px;margin:0 0 10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.badge{font-family:var(--body);font-size:14px;font-weight:700;background:var(--wrong-soft);color:var(--wrong);padding:3px 10px;border-radius:999px}
+details.lesson{background:var(--jade-soft);border-radius:12px;padding:4px 16px;margin-bottom:12px}
+details.lesson summary{cursor:pointer;font-weight:700;padding:10px 0;color:var(--jade)}
+.lesson-body{font-size:16px;padding-bottom:10px}
+.lesson-body table{border-collapse:collapse;width:100%;margin:8px 0;font-size:15px;display:block;overflow-x:auto}
+.lesson-body th,.lesson-body td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;background:var(--card)}
+.lesson-body th{background:var(--bg)}
+.lesson-body .tip{background:var(--sun-soft);border-radius:10px;padding:8px 12px}
+.slips{list-style:none;padding:0;margin:0}
+.slips li{border-bottom:1px solid var(--line);padding:12px 0}
+.slips p{margin:3px 0}
+.slip-q{font-weight:700}
+.slips s{color:var(--wrong)}
+.diag{background:var(--wrong-soft);border-radius:8px;padding:6px 10px;font-size:15px}
+.slips .why{color:var(--muted);font-size:15px}
+.overview:empty{display:none}
+.bars{list-style:none;padding:0;margin:8px 0}
+.bars li{display:grid;grid-template-columns:minmax(0,1fr) 120px 30px;gap:10px;align-items:center;padding:6px 0;font-size:15px}
+.bar-track{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.bar-track i{display:block;height:100%;background:var(--wrong)}
+.bar-n{font-weight:700;text-align:right}
+@media (max-width:480px){.bars li{grid-template-columns:minmax(0,1fr) 70px 26px}}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
@@ -127,6 +155,7 @@ mark.bad{background:var(--wrong-soft);color:var(--wrong);border-radius:4px;paddi
       <p class="lede">Por, pelo and pela, both past tenses (perfeito and imperfeito), ficar, the present continuous, writing practice and all your new words. Pick a quiz, or mix the lot. Accents are optional when you type.</p>
     </header>
     <ul class="menu" id="menu"></ul>
+    <div id="overview" class="overview"></div>
 
     <details class="fixes">
       <summary>A few fixes for your notes</summary>
@@ -173,9 +202,10 @@ mark.bad{background:var(--wrong-soft);color:var(--wrong);border-radius:4px;paddi
     <p class="qtopic" id="doneTitle"></p>
     <div class="score" id="score"></div>
     <p id="doneMsg"></p>
-    <ul class="misses" id="misses"></ul>
+    <div id="misses"></div>
     <div class="row">
-      <button class="btn" id="again">Try again</button>
+      <button class="btn" id="practise" hidden>Practise these mistakes</button>
+      <button class="btn ghost" id="again">Try the whole quiz again</button>
       <button class="btn ghost" id="home2">All quizzes</button>
     </div>
   </section>
@@ -420,12 +450,13 @@ function vocabQs(n){
   return shuffle(VOCAB).slice(0,n).map((w,i)=>{
     const toEn = i%2===0;
     const others = shuffle(VOCAB.filter(v=>v[0]!==w[0]&&v[1]!==w[1])).slice(0,3);
-    if(toEn) return {t:"mc",vocab:true,q:"\""+w[0]+"\" means…",opts:[w[1],...others.map(o=>o[1])],a:w[1],ex:w[0]+" = "+w[1]+"."};
-    return {t:"mc",vocab:true,q:"How do you say \""+w[1]+"\"?",opts:[w[0],...others.map(o=>o[0])],a:w[0],ex:w[1]+" = "+w[0]+"."};
+    if(toEn) return {t:"mc",vocab:true,word:w[0],q:"\""+w[0]+"\" means…",opts:[w[1],...others.map(o=>o[1])],a:w[1],ex:w[0]+" = "+w[1]+"."};
+    return {t:"mc",vocab:true,word:w[0],q:"How do you say \""+w[1]+"\"?",opts:[w[0],...others.map(o=>o[0])],a:w[0],ex:w[1]+" = "+w[0]+"."};
   });
 }
 
 const MENU = [
+  {id:"mistakes",title:"My mistakes",desc:"",count:""},
   ...QUIZZES.map(z=>({id:z.id,title:z.title,desc:z.desc,count:z.qs.length+" questions"})),
   {id:"vocab",title:"New words: all of them",desc:"Every word from Vocabulary I and II, shuffled, both directions.",count:VOCAB.length+" questions"},
   {id:"vocab20",title:"New words: quick 20",desc:"A random 20 when you're short on time. Different words each go.",count:"20 questions"},
@@ -436,13 +467,23 @@ const $ = id=>document.getElementById(id);
 let current=null, qs=[], idx=0, right=0, missed=[], hintsUsed=0;
 
 function buildMenu(){
-  $("menu").innerHTML = MENU.map(m=>`<li class="${m.id==='mix'?'mix':''}"><button data-id="${m.id}"><span class="m-title">${m.title}</span><span class="m-count">${m.count}</span><span class="m-desc">${m.desc}</span></button></li>`).join("");
+  const n=activeMistakes().length,mm=MENU[0];
+  mm.count=n?n+" to fix":"none yet";
+  mm.desc=n?"Questions you've got wrong in any quiz. Get one right twice in a row and it leaves the list.":"Every mistake you make in any quiz (here or in the Study Hub) collects here so you can practise it.";
+  $("menu").innerHTML = MENU.map(m=>`<li class="${m.id==='mix'?'mix':''}${m.id==='mistakes'?' mine'+(n?'':' empty'):''}"><button data-id="${m.id}"><span class="m-title">${m.title}</span><span class="m-count">${m.count}</span><span class="m-desc">${m.desc}</span></button></li>`).join("");
   $("menu").querySelectorAll("button").forEach(b=>b.onclick=()=>start(b.dataset.id));
 }
 
+let retryQs=[],retryFrom="";
 function start(id){
-  current=MENU.find(m=>m.id===id);
-  if(id==="vocab") qs=vocabQs(VOCAB.length);
+  current=MENU.find(m=>m.id===id)||current;
+  if(id==="mistakes"){
+    const list=activeMistakes().sort((x,y)=>(y.wrong-x.wrong)||((y.last||0)-(x.last||0))).slice(0,20);
+    if(!list.length)return;
+    qs=shuffle(list).map(it=>({...it.q,topic:it.q.topic,times:it.wrong}));
+  }
+  else if(id==="retry"){ current={id:"retry",title:"Your mistakes from "+retryFrom}; qs=shuffle(retryQs.map(q=>({...q,usedHint:false}))); }
+  else if(id==="vocab") qs=vocabQs(VOCAB.length);
   else if(id==="vocab20") qs=vocabQs(20);
   else if(id==="mix"){
     const all=[];QUIZZES.forEach(z=>z.qs.forEach(q=>{if(q.t!=="write")all.push({...q,zid:z.id,topic:z.title})}));
@@ -455,7 +496,7 @@ function start(id){
   show("quiz");render();
 }
 
-function show(which){["home","quiz","done"].forEach(s=>$(s).hidden=(s!==which));window.scrollTo(0,0)}
+function show(which){if(which==="home"){buildMenu();renderOverview();}["home","quiz","done"].forEach(s=>$(s).hidden=(s!==which));window.scrollTo(0,0)}
 
 function norm(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[.!?,]/g,"").replace(/\s+/g," ").trim()}
 
@@ -509,6 +550,141 @@ function diffHTML(r){
   return `<p>Yours: ${yours}</p>${fixes?`<ul class="fixlist">${fixes}</ul>`:""}`;
 }
 const IMPF=/\b\w+(ava|avam|ávamos|avamos|ia|iam|íamos|iamos)\b|\b(era|eram|éramos|eramos|tinha|tinham|estava|estavam)\b/gi;
+
+/* ================= MISTAKE TRACKING (saved in this browser) ================= */
+const STORE_KEY="pt_mistakes_v1";
+function loadStore(){try{const s=JSON.parse(localStorage.getItem(STORE_KEY)||"{}");s.items=s.items||{};return s}catch(e){return{items:{}}}}
+function saveStore(s){try{localStorage.setItem(STORE_KEY,JSON.stringify(s))}catch(e){}}
+function plain(h){return String(h).replace(/<[^>]+>/g,"___").replace(/\s+/g," ").trim()}
+function qKey(q){return (q.vocab?"vocab|"+(q.word||plain(q.q)):(q.zid||"x")+"|"+plain(q.q))}
+function topicTitle(zid){if(zid==="vocab")return"New words";const z=QUIZZES.find(z=>z.id===zid);return z?z.title:(zid||"Other")}
+function record(q,ok,given){
+  if(q.open)return;
+  const s=loadStore(),k=qKey(q);let it=s.items[k];
+  if(ok){ if(it){it.streak=(it.streak||0)+1;it.right=(it.right||0)+1;if(it.streak>=2)it.mastered=true;} }
+  else{
+    if(!it)it=s.items[k]={q:{t:q.t,q:q.q,opts:q.opts,a:q.a,ex:q.ex,h:q.h,vocab:q.vocab,word:q.word,zid:q.vocab?"vocab":q.zid,topic:q.vocab?"New words":topicTitle(q.zid)},wrong:0,right:0,streak:0,given:[]};
+    it.wrong++;it.streak=0;it.mastered=false;it.last=Date.now();
+    it.given=[String(given||"").slice(0,120),...(it.given||[])].slice(0,3);
+  }
+  if(it)s.items[k]=it;saveStore(s);
+}
+function undoWrong(q){const s=loadStore(),k=qKey(q),it=s.items[k];if(!it)return;it.wrong--;if(it.wrong<=0)delete s.items[k];saveStore(s)}
+function activeMistakes(){return Object.values(loadStore().items).filter(i=>!i.mastered)}
+
+/* ================= TOPIC EXPLANATIONS for the recap ================= */
+const LESSONS={
+por:{title:"Por, pelo, pela (and when it's pra, na or do instead)",html:`
+<p><b>POR joins with the article:</b> por + o = <b>pelo</b>, por + a = <b>pela</b>, por + os = <b>pelos</b>, por + as = <b>pelas</b>.</p>
+<table><tr><th>Use POR / PELO / PELA for…</th><th>Example</th></tr>
+<tr><td>moving through or along a place</td><td>Eu vou <b>pelo</b> parque. Ele entrou <b>pela</b> janela.</td></tr>
+<tr><td>the way something is done (by phone, by post)</td><td>Falo com a minha mãe <b>pelo</b> telefone.</td></tr>
+<tr><td>thanking for something</td><td>Obrigada <b>pela</b> ajuda!</td></tr>
+<tr><td>prices and swaps</td><td>Paguei 50 reais <b>pela</b> camiseta.</td></tr>
+<tr><td>fixed phrases</td><td><b>pelo</b> menos (at least), <b>pela</b> primeira vez, <b>pelo</b> visto (apparently)</td></tr></table>
+<p><b>Not POR:</b> going <i>to</i> somewhere is <b>pra</b> (vou pra praia), being <i>in</i> a place is <b>em → no/na</b> (estou na cozinha), coming <i>from</i> is <b>de → do/da</b> (sou do Brasil).</p>
+<p class="tip">Trick: if English could say <i>through, along, by</i> or <i>for (in exchange)</i>, reach for POR. If it's the destination or the person something is for, it's PRA.</p>`},
+past:{title:"Irregular past: eu and você/ele forms",html:`
+<p>These verbs don't follow -ei / -ou. Learn them as pairs:</p>
+<table><tr><th>verb</th><th>eu</th><th>você / ele / a gente</th></tr>
+<tr><td>fazer</td><td>fiz</td><td>fez</td></tr><tr><td>trazer</td><td>trouxe</td><td>trouxe</td></tr>
+<tr><td>ver</td><td>vi</td><td>viu</td></tr><tr><td>vir</td><td>vim</td><td>veio</td></tr>
+<tr><td>estar</td><td>estive</td><td>esteve</td></tr><tr><td>ter</td><td>tive</td><td>teve</td></tr>
+<tr><td>dar</td><td>dei</td><td>deu</td></tr><tr><td>poder</td><td>pude</td><td>pôde</td></tr>
+<tr><td>querer</td><td>quis</td><td>quis</td></tr><tr><td>dizer</td><td>disse</td><td>disse</td></tr>
+<tr><td>saber</td><td>soube</td><td>soube</td></tr><tr><td>pôr</td><td>pus</td><td>pôs</td></tr>
+<tr><td>ir / ser</td><td>fui</td><td>foi</td></tr><tr><td>sair</td><td>saí</td><td>saiu</td></tr></table>
+<p class="tip">Traps: <b>vi</b> = I saw, <b>vim</b> = I came. <b>pôde</b> (past, with the hat) vs <b>pode</b> (present). Notice the eu form usually ends in -e or -i, and the você form changes the vowel (fiz → fez, tive → teve, pude → pôde).</p>`},
+ana:{title:"The perfeito: things that happened once",html:`
+<p>A trip story is a list of finished events, so every verb takes the <b>perfeito</b>.</p>
+<table><tr><th></th><th>-AR (viajar)</th><th>-ER (aprender)</th><th>-IR (sair)</th></tr>
+<tr><td>eu</td><td>viajei</td><td>aprendi</td><td>saí</td></tr>
+<tr><td>você / ele</td><td>viajou</td><td>aprendeu</td><td>saiu</td></tr>
+<tr><td>nós</td><td>viajamos</td><td>aprendemos</td><td>saímos</td></tr>
+<tr><td>eles</td><td>viajaram</td><td>aprenderam</td><td>saíram</td></tr></table>
+<p><b>Spelling changes in the eu form</b> keep the sound the same: brin<b>car</b> → brin<b>quei</b>, che<b>gar</b> → che<b>guei</b>, come<b>çar</b> → come<b>cei</b>.</p>
+<p class="tip">Then add the irregulars from the story: quis, pude, tive, fiz, vi, dei, trouxe, disse.</p>`},
+ficar:{title:"Ficar: four jobs, one verb",html:`
+<table><tr><th>Meaning</th><th>Example</th></tr>
+<tr><td>to stay</td><td>Podemos <b>ficar</b> aqui até parar de chover.</td></tr>
+<tr><td>to be (located), for places</td><td>O banco <b>fica</b> longe? A minha casa <b>fica</b> perto daqui.</td></tr>
+<tr><td>to become / get + feeling</td><td>Ela <b>ficou</b> feliz. Eu <b>fiquei</b> nervosa.</td></tr>
+<tr><td>to turn out (results)</td><td>O trabalho <b>ficou</b> ótimo.</td></tr></table>
+<p><b>Past:</b> eu fiquei · você/ele ficou · nós ficamos · eles ficaram. The c becomes qu in <i>fiquei</i> to keep the hard sound.</p>
+<p class="tip">Check who the subject is: os alunos = eles → <b>ficaram</b>. Ficamos is only for nós. And <i>ficar com alguém</i> is casual kissing, not dating (that's <i>namorar</i>).</p>`},
+ndo:{title:"Present continuous: estar + -ndo",html:`
+<p>Use it for what is happening <b>right now</b>.</p>
+<table><tr><th>estar</th><th>+ verb</th></tr>
+<tr><td>eu estou (tô)</td><td>-AR → fal<b>ando</b></td></tr>
+<tr><td>você / ele está (tá)</td><td>-ER → com<b>endo</b></td></tr>
+<tr><td>nós estamos</td><td>-IR → abr<b>indo</b></td></tr>
+<tr><td>eles estão (tão)</td><td>ir → <b>indo</b>, fazer → <b>fazendo</b></td></tr></table>
+<p><b>Careful with English -ing:</b> after a preposition or as a noun, Portuguese uses the infinitive: Eu gosto <b>de ler</b> (not "de lendo").</p>
+<p class="tip"><i>Não estou encontrando</i> = I can't find it (right now). <i>Achar</i> means both to find (achei o lápis) and to think (acho que sim).</p>`},
+past2:{title:"Irregular past: nós and eles",html:`
+<table><tr><th>verb</th><th>eu</th><th>você/ele</th><th>nós</th><th>eles/vocês</th></tr>
+<tr><td>estar</td><td>estive</td><td>esteve</td><td>estivemos</td><td>estiveram</td></tr>
+<tr><td>ter</td><td>tive</td><td>teve</td><td>tivemos</td><td>tiveram</td></tr>
+<tr><td>querer</td><td>quis</td><td>quis</td><td>quisemos</td><td>quiseram</td></tr>
+<tr><td>fazer</td><td>fiz</td><td>fez</td><td>fizemos</td><td>fizeram</td></tr>
+<tr><td>dizer</td><td>disse</td><td>disse</td><td>dissemos</td><td>disseram</td></tr>
+<tr><td>dar</td><td>dei</td><td>deu</td><td>demos</td><td>deram</td></tr>
+<tr><td>ver</td><td>vi</td><td>viu</td><td>vimos</td><td>viram</td></tr>
+<tr><td>ir / ser</td><td>fui</td><td>foi</td><td>fomos</td><td>foram</td></tr></table>
+<p class="tip">Shortcut: take the nós form and swap <b>-mos</b> for <b>-ram</b>: estive<b>mos</b> → estive<b>ram</b>, fize<b>mos</b> → fize<b>ram</b>, de<b>mos</b> → de<b>ram</b>.</p>
+<p><b>Time words:</b> há / faz + time = ago (há dois dias). Anteontem = the day before yesterday. Faz pouco tempo = not long ago. Ainda há pouco = just a moment ago.</p>`},
+imp:{title:"Imperfeito: the 'used to' / 'was …ing' past",html:`
+<table><tr><th></th><th>-AR (falar)</th><th>-ER (comer)</th><th>-IR (dormir)</th></tr>
+<tr><td>eu</td><td>fal<b>ava</b></td><td>com<b>ia</b></td><td>dorm<b>ia</b></td></tr>
+<tr><td>você / ele</td><td>fal<b>ava</b></td><td>com<b>ia</b></td><td>dorm<b>ia</b></td></tr>
+<tr><td>nós</td><td>fal<b>ávamos</b></td><td>com<b>íamos</b></td><td>dorm<b>íamos</b></td></tr>
+<tr><td>eles</td><td>fal<b>avam</b></td><td>com<b>iam</b></td><td>dorm<b>iam</b></td></tr></table>
+<p><b>Only four irregulars:</b> ser → era, éramos, eram · ter → tinha, tínhamos, tinham · vir → vinha · pôr → punha. Estar is regular: estava, estávamos, estavam.</p>
+<p class="tip">eu and você share a form (eu trabalhava, ela trabalhava), so the subject tells you who. The nós form always has an accent: -ávamos, -íamos.</p>`},
+pvi:{title:"Perfeito or imperfeito?",html:`
+<p>Think of a film: the <b>imperfeito</b> is the scenery and what used to happen; the <b>perfeito</b> is the action that happens once.</p>
+<table><tr><th>Perfeito (once, finished)</th><th>Imperfeito (habit, background)</th></tr>
+<tr><td>ontem, anteontem, semana passada, mês passado, uma vez, de repente, por duas horas</td><td>sempre, todo dia, todos os domingos, antigamente, naquela época, quando eu era criança, antes</td></tr>
+<tr><td>Ontem eu <b>cozinhei</b> macarrão.</td><td>Eu <b>cozinhava</b> com a minha avó todo domingo.</td></tr></table>
+<p><b>Interrupted action:</b> the thing in progress is imperfeito, the interruption is perfeito: <i>Eu <b>estava falando</b> com ela quando você <b>chegou</b>.</i></p>
+<p class="tip">Ask yourself: could I add "used to" or "was …ing" in English? → imperfeito. Could I say exactly when it happened, once? → perfeito.</p>`},
+sere:{title:"Era, estava and estava + -ndo",html:`
+<table><tr><th>Use</th><th>Example</th></tr>
+<tr><td><b>era</b>: what someone or something was like, life stages</td><td>Meu avô era generoso. Quando eu era criança…</td></tr>
+<tr><td><b>era / eram</b>: the time</td><td>Era uma hora. <b>Eram</b> cinco horas (plural for 2+).</td></tr>
+<tr><td><b>estava</b>: temporary states</td><td>Nós estávamos cansados. Ela estava doente.</td></tr>
+<tr><td><b>estava + -ndo</b>: was doing</td><td>Eu estava falando com ela quando o telefone tocou.</td></tr>
+<tr><td><b>costumava + infinitive</b>: used to</td><td>Eu costumava correr no parque (= eu corria).</td></tr></table>
+<p class="tip">Ser forms: era, era, éramos, eram. Estar forms: estava, estava, estávamos, estavam. Match the ending to the subject (nós → -amos, eles → -am).</p>`},
+tasks:{title:"Building past sentences",html:`
+<p>Check your sentence in three steps:</p>
+<p><b>1. Which past?</b> Habit or description → imperfeito (-ava/-ia, era). One finished event → perfeito (-ei/-ou, fui, fiz). "Was doing when…" → estava + -ndo … quando + perfeito.</p>
+<p><b>2. Who?</b> Match the ending to the subject: eu trabalhava, nós trabalhávamos, eles trabalhavam. <i>A gente</i> takes the ele form (a gente estava).</p>
+<p><b>3. Small words:</b> feminine adjectives for yourself (eu era tímid<b>a</b>), em + uma = numa, na feira, de cor.</p>
+<p class="tip">Word order is usually the same as English: time phrase, subject, verb, the rest. <i>Naquela época eu morava em Londres.</i></p>`},
+vocab:{title:"New words",html:`
+<p>Words stick better when you use them, not just read them. For each word below:</p>
+<p><b>1.</b> Say it out loud. <b>2.</b> Make one short sentence about your own life with it. <b>3.</b> Learn it with its opposite or partner: empurrar / puxar, cheio / vazio, começar / terminar, voo de ida / voo de volta.</p>
+<p class="tip">Words that look like English can trick you: <b>móveis</b> = furniture, <b>sempre</b> = always, <b>esquisito</b> = weird (not exquisite), <b>puxar</b> = pull (it sounds like push!).</p>`}
+};
+function lessonFor(zid){return LESSONS[zid]||{title:topicTitle(zid),html:"<p>Re-read this topic in your Study Hub guide, then try the questions again.</p>"}}
+
+/* a short, specific diagnosis of a typed answer */
+const IMPF_END=/(ava|avam|avamos|ia|iam|iamos)$/,PERF_END=/(ei|ou|amos|aram|eu|emos|eram|iu|imos|iram|i)$/;
+function diagnose(q,given){
+  if(q.t!=="type"||!given)return"";
+  const g=norm(given),a=norm(q.a[0]);if(!g||g===a)return"";
+  if(IMPF_END.test(a)&&!IMPF_END.test(g)&&PERF_END.test(g))return"You used the perfeito (a one-off event). This one needs the imperfeito: -ava for -AR verbs, -ia for -ER/-IR.";
+  if(!IMPF_END.test(a)&&IMPF_END.test(g)&&!/ndo$/.test(a))return"You used the imperfeito (a habit or 'used to'). This one is a single finished event, so it needs the perfeito.";
+  if(/ndo$/.test(g)&&!/ndo$/.test(a))return"That's the -ndo form (…ing). Here you need a conjugated verb, not the gerund.";
+  if(/ndo$/.test(a)&&!/ndo$/.test(g))return"This one needs the -ndo form: -ando for -AR, -endo for -ER, -indo for -IR.";
+  const PERSON="Right verb, wrong person. Check who is doing it: eu, você/ele, nós and eles each have their own ending (eles → -m, nós → -mos).";
+  if(g+"m"===a||a+"m"===g||g.replace(/mos$/,"")===a.replace(/m$/,"")||g.replace(/m$/,"")===a.replace(/mos$/,""))return PERSON;
+  if(Math.abs(g.length-a.length)<=1&&align([...g],[...a]).dist<=1)return"Just a spelling slip. Look closely at the letters.";
+  let p=0;while(p<g.length&&p<a.length&&g[p]===a[p])p++;
+  if(p>=3&&p>=a.length-4)return"Right verb, wrong ending. Look at the ending pattern in the explanation above.";
+  return"";
+}
 
 /* ---------- render ---------- */
 let locked=false;
@@ -574,7 +750,8 @@ const BAD=["Not quite.","Almost there.","Quase!"];
 function answer(ok,q,given,extra={}){
   locked=true;
   const hb=$("hintBtn");if(hb)hb.remove();
-  if(ok)right++;else missed.push({q:q.q,a:q.t==="mc"?q.a:q.a[0],given});
+  record(q,ok,given);
+  if(ok)right++;else if(!q.open)missed.push({q,given,diag:diagnose(q,given)});
   if(q.usedHint)hintsUsed++;
   let verdict=ok?GOOD[Math.floor(Math.random()*GOOD.length)]:BAD[Math.floor(Math.random()*BAD.length)];
   let body="";
@@ -591,7 +768,7 @@ function answer(ok,q,given,extra={}){
   }
   const override=(!ok&&q.t==="write")?`<button class="btn ghost" id="override">Mine was right too</button>`:"";
   $("feedback").innerHTML=`<div class="feedback ${ok?"":"bad"}" role="status"><p class="verdict">${ok?"✓ ":"✗ "}${verdict}</p>${body}<p class="why">${q.ex}</p></div><div class="row next"><button class="btn" id="next">${idx+1<qs.length?"Next question":"See results"}</button>${override}</div>`;
-  if(override)$("override").onclick=()=>{right++;missed.pop();$("override").remove();$("feedback").querySelector(".verdict").textContent="✓ Counted as right";$("feedback").querySelector(".feedback").classList.remove("bad");};
+  if(override)$("override").onclick=()=>{right++;missed.pop();undoWrong(q);$("override").remove();$("feedback").querySelector(".verdict").textContent="✓ Counted as right";$("feedback").querySelector(".feedback").classList.remove("bad");};
   $("next").onclick=next;
   $("feedback").scrollIntoView({behavior:"smooth",block:"nearest"});
   
@@ -610,13 +787,46 @@ function finish(){
   const pct=right/qs.length;
   $("doneMsg").textContent=pct===1?"Every single one. Parabéns!":pct>=.8?"Really solid. Just a couple to look at again.":pct>=.5?"Good going. Here's what to review.":"These are fresh, so this is normal. Review below and go again.";
   if(hintsUsed)$("doneMsg").textContent+=" You used "+hintsUsed+" hint"+(hintsUsed>1?"s":"")+".";
-  $("misses").innerHTML=missed.map(m=>`<li>${m.q.replace(/<span class="blank"><\/span>/g,"___")}<br><span class="ans">${m.a}</span></li>`).join("");
+  $("misses").innerHTML=recapHTML(missed);
+  $("practise").hidden=!missed.length;
+  retryQs=missed.map(m=>m.q);retryFrom=current.title;
+  if(current.id==="mistakes"){const left=activeMistakes().length;$("doneMsg").textContent+=` ${left} mistake${left===1?"":"s"} left on your list.`}
   show("done");
 }
 
 $("back").onclick=$("back2").onclick=$("home2").onclick=()=>show("home");
-$("again").onclick=()=>start(current.id);
-buildMenu();
+$("again").onclick=()=>start(current.id==="retry"?MENU.find(m=>m.title===retryFrom)?.id||"mix":current.id);
+$("practise").onclick=()=>start("retry");
+function esc(t){return String(t).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"})[c])}
+function answerText(q){return q.t==="mc"?q.a:(Array.isArray(q.a)?q.a[0]:q.a)}
+function recapHTML(list){
+  if(!list.length)return"";
+  const groups={};list.forEach(m=>{const z=m.q.vocab?"vocab":(m.q.zid||"x");(groups[z]=groups[z]||[]).push(m)});
+  const order=Object.keys(groups).sort((a,b)=>groups[b].length-groups[a].length);
+  return `<h2 class="recap-h">Your mistakes recap</h2><p class="recap-sub">Grouped by topic, most mistakes first. Read the explanation, then look at each slip.</p>`+
+  order.map((z,i)=>{const items=groups[z],L=LESSONS[z]||{title:items[0].q.topic||topicTitle(z),html:`<p>This one is from your Study Hub. Open the Study Guide tab there and re-read <b>${esc(items[0].q.topic||"")}</b>, then practise again.</p>`};
+    return `<section class="recap"><h3>${esc(L.title)} <span class="badge">${items.length} mistake${items.length>1?"s":""}</span></h3>
+    <details class="lesson" ${i===0?"open":""}><summary>Explanation and examples</summary><div class="lesson-body">${L.html}</div></details>
+    <ul class="slips">${items.map(m=>`<li><p class="slip-q">${plain(m.q.q)}</p>
+      ${m.given&&!m.q.open?`<p>You: <s>${esc(m.given)}</s></p>`:""}<p>Right: <b>${esc(answerText(m.q))}</b></p>
+      ${m.diag?`<p class="diag">${m.diag}</p>`:""}<p class="why">${m.q.ex}</p></li>`).join("")}</ul></section>`}).join("");
+}
+function renderOverview(){
+  const box=$("overview");if(!box)return;
+  const items=activeMistakes();
+  if(!items.length){box.innerHTML="";return}
+  const by={};items.forEach(i=>{const z=i.q.zid||"x";by[z]=(by[z]||0)+i.wrong});
+  const max=Math.max(...Object.values(by));
+  const rows=Object.entries(by).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  box.innerHTML=`<h2 class="recap-h">Where your mistakes are</h2>
+  <ul class="bars">${rows.map(([z,n])=>`<li><span class="bar-label">${esc(z.startsWith("hub-")?items.find(i=>i.q.zid===z).q.topic:lessonFor(z).title)}</span><span class="bar-track"><i style="width:${Math.max(8,n/max*100)}%"></i></span><span class="bar-n">${n}</span></li>`).join("")}</ul>
+  <div class="row"><button class="btn" id="goMistakes">Practise my mistakes</button><button class="link" id="clearMistakes">Clear my mistake history</button></div>`;
+  $("goMistakes").onclick=()=>start("mistakes");
+  let armed=false;$("clearMistakes").onclick=e=>{if(!armed){armed=true;e.target.textContent="Tap again to clear everything";return}saveStore({items:{}});show("home")};
+}
+show("home");
+if(location.hash==="#mistakes"&&activeMistakes().length)start("mistakes");
+window.addEventListener("hashchange",()=>{if(location.hash==="#mistakes"&&activeMistakes().length)start("mistakes")});
 </script>
 </body>
 </html>

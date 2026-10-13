@@ -210,6 +210,14 @@
   .opt.correct{border-color:var(--right);background:#E7F7EF;font-weight:700}
   .opt.wrong{border-color:var(--wrong);background:#FCEBE7}
   .opt:disabled{cursor:default}
+  .hub-recap{text-align:left;margin-top:24px;border-top:2px solid var(--teal);padding-top:14px}
+  .hub-recap h3{font-family:'Baloo 2',sans-serif;color:var(--teal-deep);margin-bottom:8px}
+  .hr-item{background:var(--white);border-radius:12px;padding:12px 14px;margin:10px 0;box-shadow:var(--shadow)}
+  .hr-item p{margin:4px 0}.hr-q{font-weight:700}.hr-item s{color:var(--wrong)}.hr-ex{color:var(--ink-soft);font-size:.92rem}
+  .hr-item details{margin-top:6px}.hr-item summary{cursor:pointer;color:var(--teal-deep);font-weight:700}
+  .hr-item table{border-collapse:collapse;margin-top:6px}.hr-item td{border:1px solid #DDE;padding:4px 8px}
+  .hr-note{font-size:.85rem;color:var(--ink-soft);margin-top:8px}
+  .hub-recap .btn{display:inline-block;margin-top:10px;text-decoration:none}
   .quiz-hint-btn{margin-top:16px;background:#FFF6DC;border:2px solid var(--sun);color:var(--ink);font:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;padding:12px 20px;border-radius:12px}
   .quiz-hint-btn:hover{background:var(--sun)}
   .quiz-hint-btn:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:4px}
@@ -2077,6 +2085,21 @@ function qEdit(a,b){
 }
 
 let activeQuiz=null, qIdx=0, score=0, qOrder=[], qAnswered=false;
+/* ===== mistake tracking, shared with the Lessons 25+ page (same browser) ===== */
+const MK_KEY="pt_mistakes_v1";
+function mkLoad(){try{const s=JSON.parse(localStorage.getItem(MK_KEY)||"{}");s.items=s.items||{};return s}catch(e){return{items:{}}}}
+function mkSave(s){try{localStorage.setItem(MK_KEY,JSON.stringify(s))}catch(e){}}
+function mkRecord(q,ok,given){
+  const zid='hub-'+activeQuiz.id, conv=q.t==='fill'?{t:'type',q:q.q,a:q.a,ex:q.ex}:{t:'mc',q:q.q,opts:q.opts,a:q.opts[q.a],ex:q.ex};
+  conv.zid=zid;conv.topic=activeQuiz.title;
+  const key=zid+'|'+q.q.replace(/\s+/g,' ').trim(), s=mkLoad();let it=s.items[key];
+  if(ok){ if(it){it.streak=(it.streak||0)+1;it.right=(it.right||0)+1;if(it.streak>=2)it.mastered=true;} }
+  else{ if(!it)it={q:conv,wrong:0,right:0,streak:0,given:[]}; it.wrong++;it.streak=0;it.mastered=false;it.last=Date.now();it.given=[String(given||''),...(it.given||[])].slice(0,3); }
+  if(it){s.items[key]=it;mkSave(s);}
+}
+function mkCount(){return Object.values(mkLoad().items).filter(i=>!i.mastered).length}
+let hubMissed=[];
+
 const bestScores={};
 
 const menuGrid=document.getElementById('quizMenuGrid');
@@ -2092,6 +2115,11 @@ QUIZZES.forEach((qz,i)=>{
   menuGrid.appendChild(b);
 });
 
+/* My mistakes card */
+(()=>{const n=mkCount(); if(!n) return; const a=document.createElement('a');
+  a.className='quiz-card';a.href='lessons_25.html#mistakes';a.style.display='block';a.style.textDecoration='none';a.style.borderTopColor='#E4573D';
+  a.innerHTML=`<span class="qc-icon">🎯</span><div class="qc-title">My mistakes</div><div class="qc-desc">Practise the questions you've got wrong, with explanations. Get one right twice and it leaves the list.</div><div class="qc-meta">${n} to fix</div>`;
+  setTimeout(()=>menuGrid.prepend(a),0);})();
 /* Lessons 25+ quiz page (separate file in this repo) */
 (()=>{const a=document.createElement('a');
   a.className='quiz-card';a.href='lessons_25.html';a.style.display='block';a.style.textDecoration='none';a.style.borderTopColor='var(--sun)';
@@ -2121,7 +2149,7 @@ function openQuiz(i){
   activeQuiz=QUIZZES[i];
   qOrder=[...activeQuiz.qs.keys()];
   for(let k=qOrder.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[qOrder[k],qOrder[j]]=[qOrder[j],qOrder[k]];}
-  qIdx=0;score=0;
+  qIdx=0;score=0;hubMissed=[];
   document.getElementById('quizMenu').style.display='none';
   document.getElementById('quizShell').style.display='block';
   document.getElementById('quizTitle').textContent=activeQuiz.icon+' '+activeQuiz.title;
@@ -2200,8 +2228,8 @@ function answerMC(i,q){
   const buttons=[...document.querySelectorAll('.opt')];
   buttons.forEach(b=>b.disabled=true);
   buttons[q.a].classList.add('correct');
-  if(i===q.a){ Sound.correct(); score++; finishQ(true,q,'✓ Muito bem!','good'); }
-  else { Sound.wrong(); buttons[i].classList.add('wrong'); finishQ(false,q,'✗ Not quite.','bad'); }
+  if(i===q.a){ Sound.correct(); score++; mkRecord(q,true); finishQ(true,q,'✓ Muito bem!','good'); }
+  else { Sound.wrong(); buttons[i].classList.add('wrong'); mkRecord(q,false,q.opts[i]); hubMissed.push({q,given:q.opts[i]}); finishQ(false,q,'✗ Not quite.','bad'); }
 }
 
 function answerFill(){
@@ -2213,13 +2241,13 @@ function answerFill(){
   fill.disabled=true;
   document.getElementById('quizFillCheck').style.display='none';
   if(answers.includes(guess)){
-    Sound.correct(); score++; fill.className='fill-input good';
+    Sound.correct(); score++; fill.className='fill-input good'; mkRecord(q,true);
     finishQ(true,q,'✓ Perfeito! ('+q.a[0]+')','good');
   } else if(answers.some(a=>a.length>3&&qEdit(guess,a)===1)){
-    Sound.correct(); score++; fill.className='fill-input good';
+    Sound.correct(); score++; fill.className='fill-input good'; mkRecord(q,true);
     finishQ(true,q,'≈ Almost — small typo, counted! Correct spelling: '+q.a[0]+'.','almost');
   } else {
-    Sound.wrong(); fill.className='fill-input bad';
+    Sound.wrong(); fill.className='fill-input bad'; mkRecord(q,false,fill.value); hubMissed.push({q,given:fill.value});
     finishQ(false,q,'✗ The answer is: '+q.a[0]+'.','bad');
   }
 }
@@ -2273,7 +2301,12 @@ function showResult(){
   div.className='quiz-result'; div.id='quizResult';
   div.innerHTML=`<div class="score">${score}/${total}</div><div class="msg">${pct}% · ${msg}</div>
     <button class="btn primary" id="retryBtn">Try again 🔁</button>
-    <button class="btn ghost" id="menuBtn">Pick another quiz</button>`;
+    <button class="btn ghost" id="menuBtn">Pick another quiz</button>
+    ${hubMissed.length?`<div class="hub-recap"><h3>Your mistakes recap</h3>
+      ${hubMissed.map(m=>{const right=m.q.t==='fill'?m.q.a[0]:m.q.opts[m.q.a];const c=m.q.conj&&CONJ[m.q.conj];
+        return `<div class="hr-item"><p class="hr-q">${m.q.q}</p><p>You: <s>${String(m.given).replace(/</g,'&lt;')}</s> &nbsp; Right: <b>${right}</b></p><p class="hr-ex">${m.q.ex}</p>${c?`<details><summary>Full breakdown: ${c.verb}</summary><table>${c.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}</table><div class="cb-note">${c.note}</div></details>`:''}</div>`}).join('')}
+      <a class="btn primary" href="lessons_25.html#mistakes">Practise all my mistakes →</a>
+      <p class="hr-note">Saved in this browser. Every mistake from every quiz collects in “My mistakes” on the Lessons 25+ page.</p></div>`:''}`;
   document.getElementById('quizShell').insertBefore(div,document.querySelector('.quiz-actions'));
   document.getElementById('retryBtn').addEventListener('click',()=>openQuiz(QUIZZES.indexOf(activeQuiz)));
   document.getElementById('menuBtn').addEventListener('click',backToMenu);

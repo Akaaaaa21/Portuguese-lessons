@@ -210,7 +210,8 @@
   .opt.correct{border-color:var(--right);background:#E7F7EF;font-weight:700}
   .opt.wrong{border-color:var(--wrong);background:#FCEBE7}
   .opt:disabled{cursor:default}
-  .quiz-hint-btn{margin-top:14px;background:none;border:none;color:var(--teal-deep);font:inherit;font-weight:700;cursor:pointer;padding:4px 0}
+  .quiz-hint-btn{margin-top:16px;background:#FFF6DC;border:2px solid var(--sun);color:var(--ink);font:inherit;font-size:1.05rem;font-weight:700;cursor:pointer;padding:12px 20px;border-radius:12px}
+  .quiz-hint-btn:hover{background:var(--sun)}
   .quiz-hint-btn:focus-visible{outline:3px solid var(--pink);outline-offset:3px;border-radius:4px}
   .quiz-hint{display:none;margin-top:10px;padding:10px 14px;border-radius:12px;background:#FFF6DC;color:var(--ink);font-size:.93rem}
   .quiz-hint.show{display:block}
@@ -2240,7 +2241,7 @@ document.getElementById('quizHint').addEventListener('click',()=>{
   document.getElementById('quizHint').style.display='none';
 });
 document.getElementById('quizFill').addEventListener('keydown',e=>{
-  if(e.key==='Enter'){ e.preventDefault(); qAnswered ? nextQ() : answerFill(); }
+  if(e.key==='Enter'){ e.preventDefault(); if(!qAnswered) answerFill(); }
 });
 
 function nextQ(){
@@ -2564,7 +2565,7 @@ document.getElementById('writeHint').addEventListener('click',()=>{
   wFb.textContent='💡 Hint: ' + ans.slice(0,wHintLevel) + '·'.repeat(Math.max(ans.length-wHintLevel,0));
 });
 wInput.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){ e.preventDefault(); wAnswered ? nextWrite() : checkWrite(); }
+  if(e.key==='Enter'){ e.preventDefault(); if(!wAnswered) checkWrite(); }
 });
 document.getElementById('dirPTEN').addEventListener('click',()=>{
   wDir='PTEN';

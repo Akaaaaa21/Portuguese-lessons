@@ -58,31 +58,31 @@ details.fixes li{margin:6px 0}
 
 /* Quiz */
 .topbar{display:flex;justify-content:space-between;align-items:center;padding:20px 0 10px;gap:12px}
-.link{all:unset;cursor:pointer;color:var(--jade);font-weight:700}
+.link{all:unset;cursor:pointer;color:var(--jade);font-weight:700;font-size:18px}
 .link:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:4px}
 .count{color:var(--muted);font-family:var(--display);font-weight:700}
 .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:28px}
 .bar i{display:block;height:100%;background:var(--jade);width:0;transition:width .3s ease}
-.qtopic{color:var(--muted);font-size:15px;margin:0 0 6px}
-.qtext{font-family:var(--display);font-weight:700;font-size:clamp(24px,5.6vw,32px);line-height:1.2;letter-spacing:-.01em;margin:0 0 24px}
+.qtopic{color:var(--muted);font-size:17px;margin:0 0 8px}
+.qtext{font-family:var(--display);font-weight:700;font-size:clamp(28px,6.4vw,40px);line-height:1.2;letter-spacing:-.01em;margin:0 0 24px}
 .qtext .blank{display:inline-block;min-width:3.2em;border-bottom:3px solid var(--sun);transform:translateY(-4px)}
 .opts{display:grid;gap:10px}
-.opt{all:unset;box-sizing:border-box;cursor:pointer;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 16px;font-size:18px;transition:border-color .15s}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:16px 18px;font-size:20px;transition:border-color .15s}
 .opt:hover:not([disabled]){border-color:var(--ink)}
 .opt:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .opt[disabled]{cursor:default}
 .opt.right{border-color:var(--jade);background:var(--jade-soft)}
 .opt.wrong{border-color:var(--wrong);background:var(--wrong-soft)}
 .typer{display:flex;gap:10px;flex-wrap:wrap}
-.typer input{flex:1 1 220px;font:inherit;font-size:20px;padding:13px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.typer input{flex:1 1 220px;font:inherit;font-size:22px;padding:13px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
 .typer input:focus{outline:none;border-color:var(--jade)}
-.btn{all:unset;box-sizing:border-box;cursor:pointer;background:var(--ink);color:var(--bg);font-weight:700;padding:14px 22px;border-radius:12px;text-align:center}
+.btn{all:unset;box-sizing:border-box;cursor:pointer;background:var(--ink);color:var(--bg);font-weight:700;font-size:19px;padding:16px 28px;border-radius:14px;text-align:center;min-height:56px}
 .btn:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
 .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--ink)}
 .hint{color:var(--muted);font-size:14px;margin-top:8px}
-.feedback{margin-top:22px;border-left:5px solid var(--jade);padding:4px 0 4px 16px}
+.feedback{margin-top:22px;border-left:5px solid var(--jade);padding:4px 0 4px 16px;font-size:18px}
 .feedback.bad{border-color:var(--wrong)}
-.verdict{font-family:var(--display);font-weight:700;font-size:20px;margin:0 0 4px}
+.verdict{font-family:var(--display);font-weight:700;font-size:24px;margin:0 0 6px}
 .feedback p{margin:4px 0}
 .next{margin-top:20px}
 
@@ -92,8 +92,10 @@ details.fixes li{margin:6px 0}
 .misses li{padding:12px 0;border-bottom:1px solid var(--line)}
 .misses .ans{color:var(--jade);font-weight:700}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.hintbtn{display:inline-block;margin-top:16px;font-size:15px}
-.hintbox{margin-top:14px;background:var(--sun-soft);border-radius:12px;padding:10px 14px;font-size:15px}
+.hintbtn{all:unset;box-sizing:border-box;cursor:pointer;display:inline-block;margin-top:18px;padding:12px 20px;border-radius:12px;background:var(--sun-soft);color:var(--ink);font-weight:700;font-size:18px;border:2px solid var(--sun)}
+.hintbtn:hover{background:var(--sun);color:#1E2422}
+.hintbtn:focus-visible{outline:3px solid var(--jade);outline-offset:2px}
+.hintbox{margin-top:14px;background:var(--sun-soft);border-radius:12px;padding:12px 16px;font-size:17px}
 .hintbox p{margin:4px 0}
 .opt.out{opacity:.35;text-decoration:line-through}
 .wr{width:100%;font:inherit;font-size:19px;padding:13px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
@@ -460,12 +462,12 @@ function norm(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowe
 /* ---------- hints ---------- */
 const QHINT={
  por:"Por + o = pelo, por + a = pela. POR for passing through, thanks, prices. PRA for destination, EM for where you are.",
- past:"Irregular past (eu / você): fiz/fez, trouxe/trouxe, vi/viu, estive/esteve, tive/teve, vim/veio, dei/deu, pude/pôde, quis/quis, disse/disse, soube/soube, pus/pôs.",
+ past:"Irregular verbs change their stem in the past: fazer → fiz-/fez, trazer → troux-, estar → estiv-/estev-, ter → tiv-/tev-, vir → vim/vei-, poder → pud-/pôd-, querer → quis-, dizer → diss-, saber → soub-, pôr → pus/pôs.",
  ana:"Everything happened once, on the trip, so use the perfeito: -ei for regular -AR, -i for -ER/-IR, and the irregular eu forms (quis, pude, tive, fiz, vi, dei, trouxe, disse).",
  ficar:"Ficar = to stay, to be located, to become, to turn out. Past: fiquei, ficou, ficamos, ficaram.",
  ndo:"Estar + verb with -ando (-AR), -endo (-ER), -indo (-IR). Estou, está, estamos, estão.",
- past2:"Nós ends in -mos, eles/vocês in -ram: estivemos/estiveram, tivemos/tiveram, quisemos/quiseram, fizemos/fizeram, dissemos/disseram, demos/deram, vimos/viram.",
- imp:"-AR: -ava, -ava, -ávamos, -avam. -ER and -IR: -ia, -ia, -íamos, -iam. Ser: era, éramos, eram. Ter: tinha, tínhamos, tinham.",
+ past2:"Nós ends in -mos, eles/vocês in -ram, built on the irregular stem: estiv-, tiv-, quis-, fiz-, diss-, de-, vi-.",
+ imp:"-AR verbs: -ava, -ava, -ávamos, -avam. -ER and -IR verbs: -ia, -ia, -íamos, -iam. Ser (er-) and ter (tinh-) keep those stems but follow the same person endings.",
  pvi:"Once, finished, a set time (ontem, semana passada) → perfeito. Habits, 'used to', background (sempre, todo dia, antigamente, quando eu era…) → imperfeito.",
  sere:"SER (era) for what someone/something was like, life stages and the time. ESTAR (estava) for temporary states and estava + -ndo for 'was doing'.",
  tasks:"Habits and descriptions → imperfeito (-ava, -ia, era). One finished event → perfeito. 'Was doing when…' → estava + -ndo … quando + perfeito."
@@ -518,7 +520,7 @@ function render(){
   $("qtext").innerHTML=q.q;
   $("feedback").innerHTML="";
   const area=$("answerArea");
-  const hintBtn=`<button class="link hintbtn" id="hintBtn">Show a hint</button><div id="hintBox" class="hintbox" hidden></div>`;
+  const hintBtn=`<button class="hintbtn" id="hintBtn">💡 Show a hint</button><div id="hintBox" class="hintbox" hidden></div>`;
   if(q.t==="mc"){
     const opts=(current.id==="ana")?q.opts:shuffle(q.opts);
     area.innerHTML=`<div class="opts">${opts.map(o=>`<button class="opt">${o}</button>`).join("")}</div>${hintBtn}`;
@@ -530,7 +532,7 @@ function render(){
       answer(ok,q,b.textContent);
     });
   } else if(q.t==="write"){
-    area.innerHTML=`<textarea id="inp" rows="3" aria-label="Your sentence" placeholder="Write it in Portuguese" class="wr"></textarea><div class="row"><button class="btn" id="check">Check my sentence</button></div><p class="hint">Accents optional. Ctrl/Cmd + Enter also checks.</p>${hintBtn}`;
+    area.innerHTML=`<textarea id="inp" rows="3" aria-label="Your sentence" placeholder="Write it in Portuguese" class="wr"></textarea><div class="row"><button class="btn" id="check">Check answer</button></div><p class="hint">Press Enter to check. Accents optional.</p>${hintBtn}`;
     const inp=$("inp");inp.focus();
     const go=()=>{
       if(locked||!inp.value.trim())return;
@@ -544,9 +546,9 @@ function render(){
       }
     };
     $("check").onclick=go;
-    inp.onkeydown=e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();e.stopPropagation();go();}};
+    inp.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();e.stopPropagation();go();}};
   } else {
-    area.innerHTML=`<div class="typer"><input id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer" placeholder="Type your answer"><button class="btn" id="check">Check</button></div><p class="hint">Accents optional.</p>${hintBtn}`;
+    area.innerHTML=`<div class="typer"><input id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer" placeholder="Type your answer"><button class="btn" id="check">Check answer</button></div><p class="hint">Press Enter to check. Accents optional.</p>${hintBtn}`;
     const inp=$("inp");inp.focus();
     const go=()=>{
       if(locked||!inp.value.trim())return;
@@ -592,10 +594,11 @@ function answer(ok,q,given,extra={}){
   if(override)$("override").onclick=()=>{right++;missed.pop();$("override").remove();$("feedback").querySelector(".verdict").textContent="✓ Counted as right";$("feedback").querySelector(".feedback").classList.remove("bad");};
   $("next").onclick=next;
   $("feedback").scrollIntoView({behavior:"smooth",block:"nearest"});
-  setTimeout(()=>{const n=$("next");if(n)n.focus({preventScroll:true})},250);
+  
 }
 document.addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&!e.repeat&&locked&&!$("quiz").hidden&&document.activeElement&&document.activeElement.id!=="next"&&document.activeElement.id!=="override"){e.preventDefault();next();}
+  // Enter only ever checks an answer. It never moves to the next question.
+  if(e.key==="Enter"&&!$("quiz").hidden&&locked){e.preventDefault();}
 });
 
 function next(){idx++;if(idx<qs.length)render();else finish()}

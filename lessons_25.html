@@ -92,6 +92,16 @@ details.fixes li{margin:6px 0}
 .misses li{padding:12px 0;border-bottom:1px solid var(--line)}
 .misses .ans{color:var(--jade);font-weight:700}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.hintbtn{display:inline-block;margin-top:16px;font-size:15px}
+.hintbox{margin-top:14px;background:var(--sun-soft);border-radius:12px;padding:10px 14px;font-size:15px}
+.hintbox p{margin:4px 0}
+.opt.out{opacity:.35;text-decoration:line-through}
+.wr{width:100%;font:inherit;font-size:19px;padding:13px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.wr:focus{outline:none;border-color:var(--jade)}
+mark.bad{background:var(--wrong-soft);color:var(--wrong);border-radius:4px;padding:0 3px}
+.fixlist{margin:6px 0;padding-left:20px}
+.feedback .why{color:var(--muted)}
+.feedback s{color:var(--wrong)}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
@@ -351,20 +361,20 @@ qs:[
 
 { id:"tasks", title:"Practice tasks", desc:"Write whole sentences in Portuguese, then check against a model answer and mark yourself.",
 qs:[
- {t:"write",q:"When I was a child, I played in the street every day.",a:["Quando eu era criança, eu brincava na rua todos os dias."],ex:"Era for the life stage, brincava for the habit."},
+ {t:"write",q:"When I was a child, I played in the street every day.",a:["Quando eu era criança, eu brincava na rua todos os dias.","Quando eu era criança, eu brincava na rua todo dia."],ex:"Era for the life stage, brincava for the habit."},
  {t:"write",q:"I was talking to her when you arrived.",a:["Eu estava falando com ela quando você chegou."],ex:"Background (estava falando) + one event (chegou)."},
  {t:"write",q:"Yesterday I worked a lot, but before I used to work every day.",a:["Ontem eu trabalhei muito, mas antes eu trabalhava todos os dias."],ex:"Trabalhei (once) vs trabalhava (habit)."},
- {t:"write",q:"In the old days, people used to write letters.",a:["Antigamente, as pessoas escreviam cartas."],ex:"Escrever → escreviam."},
+ {t:"write",q:"In the old days, people used to write letters.",a:["Antigamente, as pessoas escreviam cartas.","Antigamente, as pessoas costumavam escrever cartas."],ex:"Escrever → escreviam."},
  {t:"write",q:"At that time I was very shy.",a:["Naquela época eu era muito tímida.","Naquela época eu era muito tímido."],ex:"Tímida if you're talking about yourself."},
  {t:"write",q:"We were having dinner when the phone rang.",a:["Nós estávamos jantando quando o telefone tocou.","A gente estava jantando quando o telefone tocou."],ex:"With a gente the verb is like ele: a gente estava."},
  {t:"write",q:"My grandparents used to live in a small town.",a:["Os meus avós moravam numa cidade pequena.","Os meus avós moravam em uma cidade pequena."],ex:"Morar → moravam. Em + uma = numa (both fine)."},
  {t:"write",q:"My mum used to sell fruit at the market every Sunday.",a:["A minha mãe vendia frutas na feira todos os domingos."],ex:"Vender → vendia. Feira = street market."},
  {t:"write",q:"Did you use to keep a diary when you were younger? (vocês)",a:["Vocês escreviam diário quando eram mais jovens?"],ex:"Escreviam + eram."},
  {t:"write",q:"I want to rent a flat with furniture. I'll talk to the owner.",a:["Eu quero alugar um apartamento com móveis. Vou falar com o proprietário.","Eu quero alugar um apartamento com móveis. Vou falar com o dono."],ex:"Alugar, móveis, proprietário / dono from your new vocab."},
- {t:"write",q:"I know the address by heart.",a:["Eu sei o endereço de cor."],ex:"Saber de cor = to know by heart."},
+ {t:"write",q:"I know the address by heart.",a:["Eu sei o endereço de cor.","Eu sei de cor o endereço."],ex:"Saber de cor = to know by heart."},
  {t:"write",q:"It was five in the afternoon when he arrived.",a:["Eram cinco horas da tarde quando ele chegou."],ex:"Eram for plural hours."},
- {t:"write",q:"Your turn: write 2–3 sentences about what you used to do when you were a teenager. Start with \"Quando eu era adolescente…\"",a:["Quando eu era adolescente, eu comia muita pizza e saía com as minhas amigas todo fim de semana. Naquela época eu não tinha muito dinheiro."],ex:"Example only. Check you used era + -ava / -ia verbs for habits."},
- {t:"write",q:"Your turn: during covid, what did you use to do? Start with \"Na época do covid…\"",a:["Na época do covid, eu me divertia muito porque todas as minhas amigas tinham tempo livre. A gente conversava por telefone todas as noites."],ex:"Example only. Your own version from the notes, tidied: me divertia, todas as minhas amigas, tinham."}
+ {t:"write",open:true,q:"Your turn: write 2–3 sentences about what you used to do when you were a teenager. Start with \"Quando eu era adolescente…\"",a:["Quando eu era adolescente, eu comia muita pizza e saía com as minhas amigas todo fim de semana. Naquela época eu não tinha muito dinheiro."],ex:"Example only. Check you used era + -ava / -ia verbs for habits."},
+ {t:"write",open:true,q:"Your turn: during covid, what did you use to do? Start with \"Na época do covid…\"",a:["Na época do covid, eu me divertia muito porque todas as minhas amigas tinham tempo livre. A gente conversava por telefone todas as noites."],ex:"Example only. Your own version from the notes, tidied: me divertia, todas as minhas amigas, tinham."}
 ]}
 ];
 
@@ -407,9 +417,9 @@ function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor
 function vocabQs(n){
   return shuffle(VOCAB).slice(0,n).map((w,i)=>{
     const toEn = i%2===0;
-    const others = shuffle(VOCAB.filter(v=>v!==w)).slice(0,3);
-    if(toEn) return {t:"mc",q:"\""+w[0]+"\" means…",opts:[w[1],...others.map(o=>o[1])],a:w[1],ex:w[0]+" = "+w[1]+"."};
-    return {t:"mc",q:"How do you say \""+w[1]+"\"?",opts:[w[0],...others.map(o=>o[0])],a:w[0],ex:w[1]+" = "+w[0]+"."};
+    const others = shuffle(VOCAB.filter(v=>v[0]!==w[0]&&v[1]!==w[1])).slice(0,3);
+    if(toEn) return {t:"mc",vocab:true,q:"\""+w[0]+"\" means…",opts:[w[1],...others.map(o=>o[1])],a:w[1],ex:w[0]+" = "+w[1]+"."};
+    return {t:"mc",vocab:true,q:"How do you say \""+w[1]+"\"?",opts:[w[0],...others.map(o=>o[0])],a:w[0],ex:w[1]+" = "+w[0]+"."};
   });
 }
 
@@ -421,7 +431,7 @@ const MENU = [
 ];
 
 const $ = id=>document.getElementById(id);
-let current=null, qs=[], idx=0, right=0, missed=[];
+let current=null, qs=[], idx=0, right=0, missed=[], hintsUsed=0;
 
 function buildMenu(){
   $("menu").innerHTML = MENU.map(m=>`<li class="${m.id==='mix'?'mix':''}"><button data-id="${m.id}"><span class="m-title">${m.title}</span><span class="m-count">${m.count}</span><span class="m-desc">${m.desc}</span></button></li>`).join("");
@@ -433,13 +443,13 @@ function start(id){
   if(id==="vocab") qs=vocabQs(VOCAB.length);
   else if(id==="vocab20") qs=vocabQs(20);
   else if(id==="mix"){
-    const all=[];QUIZZES.forEach(z=>z.qs.forEach(q=>{if(q.t!=="write")all.push({...q,topic:z.title})}));
+    const all=[];QUIZZES.forEach(z=>z.qs.forEach(q=>{if(q.t!=="write")all.push({...q,zid:z.id,topic:z.title})}));
     qs=shuffle([...shuffle(all).slice(0,19),...vocabQs(6).map(q=>({...q,topic:"New words"}))]);
   } else {
     const z=QUIZZES.find(z=>z.id===id);
-    qs=(id==="ana")?z.qs.slice():shuffle(z.qs);
+    qs=((id==="ana")?z.qs.slice():shuffle(z.qs)).map(q=>({...q,zid:z.id}));
   }
-  idx=0;right=0;missed=[];
+  idx=0;right=0;missed=[];hintsUsed=0;
   show("quiz");render();
 }
 
@@ -447,56 +457,146 @@ function show(which){["home","quiz","done"].forEach(s=>$(s).hidden=(s!==which));
 
 function norm(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[.!?,]/g,"").replace(/\s+/g," ").trim()}
 
+/* ---------- hints ---------- */
+const QHINT={
+ por:"Por + o = pelo, por + a = pela. POR for passing through, thanks, prices. PRA for destination, EM for where you are.",
+ past:"Irregular past (eu / você): fiz/fez, trouxe/trouxe, vi/viu, estive/esteve, tive/teve, vim/veio, dei/deu, pude/pôde, quis/quis, disse/disse, soube/soube, pus/pôs.",
+ ana:"Everything happened once, on the trip, so use the perfeito: -ei for regular -AR, -i for -ER/-IR, and the irregular eu forms (quis, pude, tive, fiz, vi, dei, trouxe, disse).",
+ ficar:"Ficar = to stay, to be located, to become, to turn out. Past: fiquei, ficou, ficamos, ficaram.",
+ ndo:"Estar + verb with -ando (-AR), -endo (-ER), -indo (-IR). Estou, está, estamos, estão.",
+ past2:"Nós ends in -mos, eles/vocês in -ram: estivemos/estiveram, tivemos/tiveram, quisemos/quiseram, fizemos/fizeram, dissemos/disseram, demos/deram, vimos/viram.",
+ imp:"-AR: -ava, -ava, -ávamos, -avam. -ER and -IR: -ia, -ia, -íamos, -iam. Ser: era, éramos, eram. Ter: tinha, tínhamos, tinham.",
+ pvi:"Once, finished, a set time (ontem, semana passada) → perfeito. Habits, 'used to', background (sempre, todo dia, antigamente, quando eu era…) → imperfeito.",
+ sere:"SER (era) for what someone/something was like, life stages and the time. ESTAR (estava) for temporary states and estava + -ndo for 'was doing'.",
+ tasks:"Habits and descriptions → imperfeito (-ava, -ia, era). One finished event → perfeito. 'Was doing when…' → estava + -ndo … quando + perfeito."
+};
+function letterHint(w){const t=w.trim();return t.length<=3?`Starts with “${t[0]}…” (${t.length} letters)`:`Starts with “${t.slice(0,2)}…” (${t.length} letters)`}
+function maskSentence(sent){return sent.split(" ").map(w=>{const core=w.replace(/[.,!?]/g,"");return core.length<=3?w:w[0]+"·".repeat(core.length-1)+(w.slice(core.length))}).join(" ")}
+function hintFor(q){
+  const rule=q.h||QHINT[q.zid]||"";
+  if(q.t==="type") return `${rule?`<p>${rule}</p>`:""}<p><b>${letterHint(q.a[0])}</b></p>`;
+  if(q.t==="write") return `${rule?`<p>${rule}</p>`:""}${q.open?"":`<p>Shape of the answer: <span class="pt">${maskSentence(q.a[0])}</span></p>`}`;
+  if(q.vocab) return `<p>Two wrong options are now greyed out.</p>`;
+  return `${rule?`<p>${rule}</p>`:""}<p>One wrong option is now greyed out.</p>`;
+}
+
+/* ---------- sentence checking ---------- */
+const OPTIONAL=new Set(["eu","nos","o","a","os","as","a gente"]);
+function words(s){return norm(s).split(" ").filter(Boolean)}
+function align(A,B){ // word-level edit alignment
+  const n=A.length,m=B.length,d=[...Array(n+1)].map(()=>Array(m+1).fill(0));
+  for(let i=0;i<=n;i++)d[i][0]=i;for(let j=0;j<=m;j++)d[0][j]=j;
+  for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(A[i-1]===B[j-1]?0:1));
+  const ops=[];let i=n,j=m;
+  while(i>0||j>0){
+    if(i>0&&j>0&&d[i][j]===d[i-1][j-1]+(A[i-1]===B[j-1]?0:1)){ops.unshift(A[i-1]===B[j-1]?["ok",A[i-1],B[j-1]]:["sub",A[i-1],B[j-1]]);i--;j--;}
+    else if(i>0&&d[i][j]===d[i-1][j]+1){ops.unshift(["extra",A[i-1],null]);i--;}
+    else{ops.unshift(["miss",null,B[j-1]]);j--;}
+  }
+  return {dist:d[n][m],ops};
+}
+function checkSentence(given,answers){
+  const G=words(given);let best=null;
+  answers.forEach(a=>{const r=align(G,words(a));r.model=a;if(!best||r.dist<best.dist)best=r;});
+  const real=best.ops.filter(o=>o[0]!=="ok"&&!((o[0]==="extra"&&OPTIONAL.has(o[1]))||(o[0]==="miss"&&OPTIONAL.has(o[2]))));
+  best.ok=real.length===0;best.real=real;best.disp=given.trim().split(/\s+/).filter(t=>norm(t));return best;
+}
+function diffHTML(r){
+  const yours=r.ops.filter(o=>o[0]!=="miss").map((o,k)=>{const w=r.disp[k]||o[1];return o[0]==="ok"?w:`<mark class="bad">${w}</mark>`}).join(" ");
+  const fixes=r.real.map(o=>o[0]==="sub"?`<li><s>${o[1]}</s> → <b>${o[2]}</b></li>`:o[0]==="miss"?`<li>missing <b>${o[2]}</b></li>`:`<li>no need for <s>${o[1]}</s></li>`).join("");
+  return `<p>Yours: ${yours}</p>${fixes?`<ul class="fixlist">${fixes}</ul>`:""}`;
+}
+const IMPF=/\b\w+(ava|avam|ávamos|avamos|ia|iam|íamos|iamos)\b|\b(era|eram|éramos|eramos|tinha|tinham|estava|estavam)\b/gi;
+
+/* ---------- render ---------- */
+let locked=false;
 function render(){
-  const q=qs[idx];
+  const q=qs[idx];locked=false;
   $("count").textContent=(idx+1)+" / "+qs.length;
   $("barfill").style.width=(idx/qs.length*100)+"%";
   $("qtopic").textContent=q.topic||current.title;
   $("qtext").innerHTML=q.q;
   $("feedback").innerHTML="";
   const area=$("answerArea");
+  const hintBtn=`<button class="link hintbtn" id="hintBtn">Show a hint</button><div id="hintBox" class="hintbox" hidden></div>`;
   if(q.t==="mc"){
     const opts=(current.id==="ana")?q.opts:shuffle(q.opts);
-    area.innerHTML=`<div class="opts">${opts.map(o=>`<button class="opt">${o}</button>`).join("")}</div>`;
+    area.innerHTML=`<div class="opts">${opts.map(o=>`<button class="opt">${o}</button>`).join("")}</div>${hintBtn}`;
     area.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+      if(locked)return;
       const ok=b.textContent===q.a;
       area.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.textContent===q.a)x.classList.add("right")});
       if(!ok)b.classList.add("wrong");
       answer(ok,q,b.textContent);
     });
   } else if(q.t==="write"){
-    area.innerHTML=`<textarea id="wr" rows="3" aria-label="Your sentence" placeholder="Write it in Portuguese" style="width:100%;font:inherit;font-size:19px;padding:13px 14px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)"></textarea><div class="row"><button class="btn" id="reveal">Show answer</button></div>`;
-    $("wr").focus();
-    $("reveal").onclick=()=>{
-      $("wr").disabled=true;$("reveal").parentNode.remove();
-      $("feedback").innerHTML=`<div class="feedback"><p class="verdict">Model answer</p>${q.a.map(a=>`<p class="pt">${a}</p>`).join("")}<p>${q.ex}</p></div><div class="row"><button class="btn" id="gotit">I got it</button><button class="btn ghost" id="notyet">Not quite</button></div>`;
-      $("gotit").onclick=()=>answer(true,q,$("wr").value);
-      $("notyet").onclick=()=>answer(false,q,$("wr").value);
-    };
-  } else {
-    area.innerHTML=`<div class="typer"><input id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer" placeholder="Type your answer"><button class="btn" id="check">Check</button></div><p class="hint">Accents optional.</p>`;
+    area.innerHTML=`<textarea id="inp" rows="3" aria-label="Your sentence" placeholder="Write it in Portuguese" class="wr"></textarea><div class="row"><button class="btn" id="check">Check my sentence</button></div><p class="hint">Accents optional. Ctrl/Cmd + Enter also checks.</p>${hintBtn}`;
     const inp=$("inp");inp.focus();
     const go=()=>{
-      if(!inp.value.trim())return;
+      if(locked||!inp.value.trim())return;
+      inp.disabled=true;$("check").parentNode.remove();
+      if(q.open){
+        const used=[...new Set((inp.value.match(IMPF)||[]).map(w=>w.toLowerCase()))];
+        answer(used.length>=2,q,inp.value,{used});
+      } else {
+        const r=checkSentence(inp.value,q.a);
+        answer(r.ok,q,inp.value,{r});
+      }
+    };
+    $("check").onclick=go;
+    inp.onkeydown=e=>{if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){e.preventDefault();e.stopPropagation();go();}};
+  } else {
+    area.innerHTML=`<div class="typer"><input id="inp" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer" placeholder="Type your answer"><button class="btn" id="check">Check</button></div><p class="hint">Accents optional.</p>${hintBtn}`;
+    const inp=$("inp");inp.focus();
+    const go=()=>{
+      if(locked||!inp.value.trim())return;
       const ok=q.a.some(a=>norm(a)===norm(inp.value));
       inp.disabled=true;$("check").remove();
       answer(ok,q,inp.value);
     };
     $("check").onclick=go;
-    inp.onkeydown=e=>{if(e.key==="Enter")go()};
+    inp.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();e.stopPropagation();go();}};
   }
+  $("hintBtn").onclick=()=>{
+    q.usedHint=true;
+    $("hintBox").innerHTML=hintFor(q);$("hintBox").hidden=false;$("hintBtn").remove();
+    if(q.t==="mc"){
+      const wrong=shuffle([...area.querySelectorAll(".opt")].filter(x=>x.textContent!==q.a));
+      wrong.slice(0,q.vocab?2:1).forEach(x=>{x.disabled=true;x.classList.add("out")});
+    }
+  };
 }
 
 const GOOD=["Certinho!","Isso aí!","Muito bem!","Perfeito!","Boa!"];
-const BAD=["Quase!","Not quite.","Almost there."];
-function answer(ok,q,given){
-  if(q.t==="write"){ if(ok)right++;else missed.push({q:q.q,a:q.a[0],given}); next(); return; }
+const BAD=["Not quite.","Almost there.","Quase!"];
+function answer(ok,q,given,extra={}){
+  locked=true;
+  const hb=$("hintBtn");if(hb)hb.remove();
   if(ok)right++;else missed.push({q:q.q,a:q.t==="mc"?q.a:q.a[0],given});
-  const verdict=ok?GOOD[Math.floor(Math.random()*GOOD.length)]:BAD[Math.floor(Math.random()*BAD.length)];
-  const ans=q.t==="type"&&!ok?`<p>Answer: <span class="pt">${q.a[0]}</span></p>`:"";
-  $("feedback").innerHTML=`<div class="feedback ${ok?"":"bad"}"><p class="verdict">${verdict}</p>${ans}<p>${q.ex}</p></div><button class="btn next" id="next">${idx+1<qs.length?"Next question":"See results"}</button>`;
-  const nx=$("next");nx.focus();nx.onclick=next;
+  if(q.usedHint)hintsUsed++;
+  let verdict=ok?GOOD[Math.floor(Math.random()*GOOD.length)]:BAD[Math.floor(Math.random()*BAD.length)];
+  let body="";
+  if(q.t==="type"){
+    body=ok?`<p>✓ <span class="pt">${q.a[0]}</span></p>`:`<p>✗ You wrote: <s>${given}</s></p><p>✓ Answer: <span class="pt">${q.a[0]}</span></p>`;
+  } else if(q.t==="mc"){
+    body=ok?`<p>✓ <span class="pt">${q.a}</span></p>`:`<p>✗ You chose: <s>${given}</s></p><p>✓ Answer: <span class="pt">${q.a}</span></p>`;
+  } else if(q.open){
+    verdict=ok?"Nice, that's the imperfeito!":"Check your verbs.";
+    body=(extra.used.length?`<p>Imperfeito verbs you used: <span class="pt">${extra.used.join(", ")}</span></p>`:`<p>I couldn't spot any imperfeito verbs (-ava, -ia, era, tinha, estava). Try using at least two.</p>`)+`<p>Example answer: <span class="pt">${q.a[0]}</span></p>`;
+  } else {
+    if(!ok&&extra.r.real.length<=2) verdict="So close!";
+    body=(ok?`<p>✓ ${given}</p>`:diffHTML(extra.r))+`<p>Model answer: <span class="pt">${q.a[0]}</span></p>${q.a.length>1?`<p class="hint">Also right: ${q.a.slice(1).join(" / ")}</p>`:""}`;
+  }
+  const override=(!ok&&q.t==="write")?`<button class="btn ghost" id="override">Mine was right too</button>`:"";
+  $("feedback").innerHTML=`<div class="feedback ${ok?"":"bad"}" role="status"><p class="verdict">${ok?"✓ ":"✗ "}${verdict}</p>${body}<p class="why">${q.ex}</p></div><div class="row next"><button class="btn" id="next">${idx+1<qs.length?"Next question":"See results"}</button>${override}</div>`;
+  if(override)$("override").onclick=()=>{right++;missed.pop();$("override").remove();$("feedback").querySelector(".verdict").textContent="✓ Counted as right";$("feedback").querySelector(".feedback").classList.remove("bad");};
+  $("next").onclick=next;
+  $("feedback").scrollIntoView({behavior:"smooth",block:"nearest"});
+  setTimeout(()=>{const n=$("next");if(n)n.focus({preventScroll:true})},250);
 }
+document.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.repeat&&locked&&!$("quiz").hidden&&document.activeElement&&document.activeElement.id!=="next"&&document.activeElement.id!=="override"){e.preventDefault();next();}
+});
 
 function next(){idx++;if(idx<qs.length)render();else finish()}
 
@@ -506,6 +606,7 @@ function finish(){
   $("score").innerHTML=right+"<small> / "+qs.length+"</small>";
   const pct=right/qs.length;
   $("doneMsg").textContent=pct===1?"Every single one. Parabéns!":pct>=.8?"Really solid. Just a couple to look at again.":pct>=.5?"Good going. Here's what to review.":"These are fresh, so this is normal. Review below and go again.";
+  if(hintsUsed)$("doneMsg").textContent+=" You used "+hintsUsed+" hint"+(hintsUsed>1?"s":"")+".";
   $("misses").innerHTML=missed.map(m=>`<li>${m.q.replace(/<span class="blank"><\/span>/g,"___")}<br><span class="ans">${m.a}</span></li>`).join("");
   show("done");
 }
